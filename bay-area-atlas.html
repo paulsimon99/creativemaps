@@ -207,7 +207,7 @@
       <span>survey &middot; nine counties</span>
     </div>
     <div class="keybox">
-      <input id="apiKeyInput" type="text" placeholder="Paste your Google Maps API key">
+      <input id="apiKeyInput" type="password" placeholder="Paste your Google Maps API key" aria-label="Google Maps API key" autocomplete="off" autocapitalize="none" spellcheck="false">
       <button id="loadMapBtn">Chart the map</button>
       <a href="https://developers.google.com/maps/documentation/javascript/get-api-key" target="_blank" rel="noopener">get a key</a>
     </div>
@@ -290,55 +290,54 @@
 const CATEGORIES = {
   companies: {
     label: "Bay Area Companies & Employers", color: "#4F7B77",
-    source: "https://en.wikipedia.org/wiki/List_of_companies_based_in_the_San_Francisco_Bay_Area",
     items: [
-      {name:"Google", lat:37.4220, lng:-122.0841, desc:"Mountain View headquarters campus (the Googleplex)."},
-      {name:"Apple Park", lat:37.3349, lng:-122.0090, desc:"Apple's Cupertino corporate campus."},
-      {name:"Meta", lat:37.4847, lng:-122.1477, desc:"Menlo Park headquarters."},
-      {name:"NVIDIA", lat:37.3706, lng:-121.9645, desc:"Santa Clara headquarters."},
-      {name:"Salesforce Tower", lat:37.7897, lng:-122.3972, desc:"Salesforce's San Francisco headquarters tower."},
-      {name:"Tesla Fremont Factory", lat:37.4936, lng:-121.9448, desc:"Tesla's primary vehicle assembly plant."},
-      {name:"Oracle (Redwood Shores)", lat:37.5310, lng:-122.2600, desc:"Longtime Oracle campus in Redwood City."},
-      {name:"Intel", lat:37.3872, lng:-121.9644, desc:"Santa Clara headquarters, near founding site."},
-      {name:"Adobe", lat:37.3300, lng:-121.8950, desc:"Downtown San Jose headquarters towers."},
-      {name:"eBay", lat:37.3305, lng:-121.8907, desc:"San Jose headquarters campus."},
-      {name:"LinkedIn", lat:37.4043, lng:-122.0122, desc:"Sunnyvale campus."},
-      {name:"Genentech", lat:37.6550, lng:-122.4070, desc:"South San Francisco biotech campus, anchor of SSF's biotech cluster."},
-      {name:"Anthropic", lat:37.7855, lng:-122.3958, desc:"San Francisco AI safety company, maker of Claude; headquartered near the Embarcadero."},
-      {name:"OpenAI", lat:37.7699, lng:-122.4014, desc:"San Francisco AI research and deployment company, maker of ChatGPT."},
-      {name:"Stripe", lat:37.7766, lng:-122.3958, desc:"San Francisco payments-infrastructure company, South of Market."},
-      {name:"Airbnb", lat:37.7706, lng:-122.4038, desc:"San Francisco home-sharing marketplace headquartered near the Design District."},
-      {name:"Uber", lat:37.7695, lng:-122.3907, desc:"Ride-hailing company's Mission Bay headquarters, San Francisco."},
-      {name:"DoorDash", lat:37.7935, lng:-122.3960, desc:"San Francisco food-delivery company headquartered near the Embarcadero."},
-      {name:"Cisco Systems", lat:37.4085, lng:-121.9689, desc:"San Jose networking-hardware giant, founded by Stanford staff in 1984."},
-      {name:"PayPal", lat:37.3327, lng:-121.8907, desc:"San Jose headquarters of the online payments pioneer."},
-      {name:"Zoom Communications", lat:37.3688, lng:-121.9370, desc:"San Jose video-conferencing company that surged during the pandemic."},
-      {name:"Western Digital", lat:37.3894, lng:-121.9410, desc:"San Jose data-storage and hard-drive manufacturer."},
-      {name:"Clorox", lat:37.8046, lng:-122.2727, desc:"Downtown Oakland headquarters of the consumer cleaning-products company, founded in Oakland in 1913."},
-      {name:"Kaiser Permanente", lat:37.8083, lng:-122.2679, desc:"Oakland headquarters of the integrated health system founded during WWII shipyard work."},
-      {name:"Pandora Media", lat:37.7946, lng:-122.2778, desc:"Oakland-headquartered internet radio pioneer, founded 2000."},
-      {name:"Bio-Rad Laboratories", lat:37.9989, lng:-122.2919, desc:"Hercules headquarters of the life-science and clinical-diagnostics manufacturer."},
-      {name:"Chevron Corporation", lat:37.7799, lng:-121.9291, desc:"San Ramon was Chevron's global headquarters for decades; the company relocated its HQ to Houston, TX by the end of 2024, though it retains an office presence in San Ramon supporting California operations."},
-      {name:"Ross Stores", lat:37.7022, lng:-121.9358, desc:"Dublin headquarters of the off-price retail chain."},
-      {name:"Pixar Animation Studios", lat:37.8318, lng:-122.2865, desc:"Emeryville campus of the computer-animation studio behind Toy Story."},
-      {name:"Clif Bar & Company", lat:37.8320, lng:-122.2873, desc:"Emeryville-founded energy-bar and snack-food company."},
-      {name:"Autodesk (founding site)", lat:37.8591, lng:-122.4852, desc:"Design-software maker AutoCAD founded in Marin County (Sausalito/Mill Valley) in 1982, before moving to San Rafael and later San Francisco."},
-      {name:"Traditional Medicinals", lat:38.3399, lng:-122.7136, desc:"Rohnert Park headquarters of the herbal-tea and wellness company, founded in Sonoma County in 1974."},
-      {name:"Gilead Sciences", lat:37.5423, lng:-122.2705, desc:"Foster City headquarters of the biopharmaceutical company."},
-      {name:"Electronic Arts", lat:37.5299, lng:-122.2569, desc:"Redwood City headquarters of the video-game publisher."}
+      {name:"Google", lat:37.4220, lng:-122.0841, desc:"Mountain View headquarters campus (the Googleplex).", src:"https://about.google/"},
+      {name:"Apple Park", lat:37.3349, lng:-122.0090, desc:"Apple's Cupertino corporate campus.", src:"https://www.apple.com/contact/"},
+      {name:"Meta", lat:37.4847, lng:-122.1477, desc:"Menlo Park headquarters.", src:"https://about.meta.com/company-info/"},
+      {name:"NVIDIA", lat:37.3706, lng:-121.9645, desc:"Santa Clara headquarters.", src:"https://www.nvidia.com/en-us/about-nvidia/"},
+      {name:"Salesforce Tower", lat:37.7897, lng:-122.3972, desc:"Salesforce's San Francisco headquarters tower.", src:"https://www.salesforce.com/company/"},
+      {name:"Tesla Fremont Factory", lat:37.4936, lng:-121.9448, desc:"Tesla's primary vehicle assembly plant.", src:"https://www.tesla.com/manufacturing"},
+      {name:"Oracle (Redwood Shores, former headquarters)", lat:37.5310, lng:-122.2600, desc:"Oracle's longtime Redwood Shores campus and former world headquarters. Oracle moved its corporate headquarters to Austin, Texas, in December 2020.", src:"https://www.oracle.com/corporate/contact/field-offices/"},
+      {name:"Intel", lat:37.3872, lng:-121.9644, desc:"Santa Clara headquarters, near founding site.", src:"https://www.intel.com/content/www/us/en/company-overview/company-overview.html"},
+      {name:"Adobe", lat:37.3300, lng:-121.8950, desc:"Downtown San Jose headquarters towers.", src:"https://www.adobe.com/about-adobe.html"},
+      {name:"eBay", lat:37.3305, lng:-121.8907, desc:"San Jose headquarters campus.", src:"https://www.ebayinc.com/company/"},
+      {name:"LinkedIn", lat:37.4043, lng:-122.0122, desc:"Sunnyvale campus.", src:"https://about.linkedin.com/"},
+      {name:"Genentech", lat:37.6550, lng:-122.4070, desc:"South San Francisco biotech campus, anchor of SSF's biotech cluster.", src:"https://www.gene.com/about-us"},
+      {name:"Anthropic", lat:37.7855, lng:-122.3958, desc:"San Francisco AI safety company, maker of Claude; headquartered near the Embarcadero.", src:"https://www.anthropic.com/company"},
+      {name:"OpenAI", lat:37.7699, lng:-122.4014, desc:"San Francisco AI research and deployment company, maker of ChatGPT.", src:"https://openai.com/about/"},
+      {name:"Stripe", lat:37.7766, lng:-122.3958, desc:"Payments-infrastructure company with dual headquarters in San Francisco and Dublin.", src:"https://stripe.com/newsroom/information"},
+      {name:"Airbnb", lat:37.7706, lng:-122.4038, desc:"San Francisco home-sharing marketplace headquartered near the Design District.", src:"https://news.airbnb.com/about-us/"},
+      {name:"Uber", lat:37.7695, lng:-122.3907, desc:"Ride-hailing company's Mission Bay headquarters, San Francisco.", src:"https://www.uber.com/us/en/about/"},
+      {name:"DoorDash", lat:37.7935, lng:-122.3960, desc:"San Francisco food-delivery company headquartered near the Embarcadero.", src:"https://about.doordash.com/"},
+      {name:"Cisco Systems", lat:37.4085, lng:-121.9689, desc:"San Jose networking-hardware giant, founded by Stanford staff in 1984.", src:"https://www.cisco.com/site/us/en/about/index.html"},
+      {name:"PayPal", lat:37.3327, lng:-121.8907, desc:"San Jose headquarters of the online payments pioneer.", src:"https://about.pypl.com/about-us/default.aspx"},
+      {name:"Zoom Communications", lat:37.3688, lng:-121.9370, desc:"San Jose video-conferencing company that surged during the pandemic.", src:"https://www.zoom.com/en/about/"},
+      {name:"Western Digital", lat:37.3894, lng:-121.9410, desc:"San Jose data-storage and hard-drive manufacturer.", src:"https://www.westerndigital.com/company"},
+      {name:"Clorox", lat:37.8046, lng:-122.2727, desc:"Downtown Oakland headquarters of the consumer cleaning-products company, founded in Oakland in 1913.", src:"https://www.thecloroxcompany.com/company/"},
+      {name:"Kaiser Permanente", lat:37.8083, lng:-122.2679, desc:"Oakland headquarters of the integrated health system founded during WWII shipyard work.", src:"https://about.kaiserpermanente.org/"},
+      {name:"Pandora Media", lat:37.7946, lng:-122.2778, desc:"Oakland-founded internet radio pioneer, founded in 2000 and now part of SiriusXM.", src:"https://www.pandora.com/about"},
+      {name:"Bio-Rad Laboratories", lat:37.9989, lng:-122.2919, desc:"Hercules headquarters of the life-science and clinical-diagnostics manufacturer.", src:"https://www.bio-rad.com/en-us/corporate"},
+      {name:"Chevron Corporation", lat:37.7799, lng:-121.9291, desc:"San Ramon was Chevron's global headquarters for decades; the company relocated its HQ to Houston, TX by the end of 2024, though it retains an office presence in San Ramon supporting California operations.", src:"https://www.chevron.com/who-we-are"},
+      {name:"Ross Stores", lat:37.7022, lng:-121.9358, desc:"Dublin headquarters of the off-price retail chain.", src:"https://investors.rossstores.com/company-information"},
+      {name:"Pixar Animation Studios", lat:37.8318, lng:-122.2865, desc:"Emeryville campus of the computer-animation studio behind Toy Story.", src:"https://www.pixar.com/"},
+      {name:"Clif Bar & Company", lat:37.8320, lng:-122.2873, desc:"Emeryville-founded energy-bar and snack-food company.", src:"https://www.clifbar.com/about-us"},
+      {name:"Autodesk (founding site)", lat:37.8591, lng:-122.4852, desc:"Design-software maker AutoCAD founded in Marin County (Sausalito/Mill Valley) in 1982, before moving to San Rafael and later San Francisco.", src:"https://www.autodesk.com/company"},
+      {name:"Traditional Medicinals", lat:38.3399, lng:-122.7136, desc:"Rohnert Park headquarters of the herbal-tea and wellness company, founded in Sonoma County in 1974.", src:"https://www.traditionalmedicinals.com/pages/about"},
+      {name:"Gilead Sciences", lat:37.5423, lng:-122.2705, desc:"Foster City headquarters of the biopharmaceutical company.", src:"https://www.gilead.com/about"},
+      {name:"Electronic Arts", lat:37.5299, lng:-122.2569, desc:"Redwood City headquarters of the video-game publisher.", src:"https://www.ea.com/about"}
     ]
   },
   inventions: {
     label: "Bay Area Inventions & Firsts", color:"#A8503A",
     source: "https://www.thebolditalic.com/10-inventions-to-come-out-of-san-francisco-before-tech-took-over/",
     items: [
-      {name:"HP Garage, Palo Alto", lat:37.4459, lng:-122.1611, desc:"Addison Avenue garage where Hewlett and Packard began; called the 'Birthplace of Silicon Valley.'"},
-      {name:"Ghirardelli Square", lat:37.8060, lng:-122.4230, desc:"Former chocolate factory tied to San Francisco's confectionery history."},
-      {name:"Buena Vista Cafe", lat:37.8060, lng:-122.4210, desc:"Credited with introducing Irish coffee to the U.S. in 1952."},
-      {name:"Japanese Tea Garden, GG Park", lat:37.7702, lng:-122.4700, desc:"One of the sites credited in fortune cookie origin stories."},
-      {name:"Cable Car Turnaround, Powell & Market", lat:37.7845, lng:-122.4079, desc:"San Francisco's cable car system, a National Historic Landmark."},
-      {name:"Blue Bottle Coffee, Oakland", lat:37.8044, lng:-122.2712, desc:"Where the Bay Area's specialty coffee roaster got its start."},
-      {name:"Atari Founding Site", lat:37.2358, lng:-121.9624, desc:"Early Atari offices in the South Bay video game corridor."},
+      {name:"HP Garage, Palo Alto", lat:37.4459, lng:-122.1611, desc:"Addison Avenue garage where Hewlett and Packard began; called the 'Birthplace of Silicon Valley.'", src:"https://www.hp.com/hpinfo/abouthp/histnfacts/garage/index.html"},
+      {name:"Ghirardelli Square", lat:37.8060, lng:-122.4230, desc:"Former chocolate factory tied to San Francisco's confectionery history.", src:"https://www.ghirardellisq.com/history"},
+      {name:"Buena Vista Cafe", lat:37.8060, lng:-122.4210, desc:"Credited with introducing Irish coffee to the U.S. in 1952.", src:"https://www.thebuenavista.com/home/irishcoffee.html"},
+      {name:"Japanese Tea Garden, GG Park", lat:37.7702, lng:-122.4700, desc:"One of the sites credited in fortune cookie origin stories.", src:"https://www.japaneseteagardensf.com/tea-house"},
+      {name:"Cable Car Turnaround, Powell & Market", lat:37.7845, lng:-122.4079, desc:"San Francisco's cable car system, a National Historic Landmark.", src:"https://www.sfmta.com/getting-around/muni/cable-cars/cable-car-history"},
+      {name:"Blue Bottle Coffee, Oakland", lat:37.8044, lng:-122.2712, desc:"Where the Bay Area's specialty coffee roaster got its start.", src:"https://bluebottlecoffee.com/us/eng/our-story"},
+      {name:"Atari Founding Site", lat:37.2358, lng:-121.9624, desc:"Early Atari offices in the South Bay video game corridor.", src:"https://atari.com/pages/history"},
       {name:"Levi's Plaza (Jeans)", lat:37.8036, lng:-122.4013, desc:"Levi Strauss & Co. and Jacob Davis patented copper-riveted denim 'waist overalls' on May 20, 1873, birthing blue jeans."},
       {name:"Playland at Ocean Beach site (It's-It)", lat:37.7749, lng:-122.5107, desc:"George Whitney created the It's-It ice cream sandwich in 1928, sold for decades at the Playland amusement park that once stood here."},
       {name:"North Beach (Cioppino)", lat:37.8080, lng:-122.4177, desc:"Genoese fishermen created cioppino fish stew in the late 1800s from the day's leftover catch; popularized locally from 1852 onward."},
@@ -347,7 +346,7 @@ const CATEGORIES = {
       {name:"Palace Hotel (Tetrazzini & Green Goddess)", lat:37.7885, lng:-122.4013, desc:"Palace Hotel chefs invented chicken tetrazzini (c. 1908-1910) and Green Goddess salad dressing (1923), both named for celebrity guests."},
       {name:"406 Market Street (Slot Machine)", lat:37.7909, lng:-122.3994, desc:"Charles Fey built the three-reel Liberty Bell slot machine here in 1899, the site is California Historical Landmark No. 937."},
       {name:"Varsity Sweet Shop site (Bendy Straw)", lat:37.7699, lng:-122.4756, desc:"Joseph Friedman invented the flexible drinking straw here in 1937 after watching his daughter struggle with a straight one."},
-      {name:"Nob Hill (Murphy Bed)", lat:37.7929, lng:-122.4161, desc:"William Lawrence Murphy invented the fold-into-the-wall Murphy bed in his small San Francisco apartment in the late 1800s; exact address is not precisely documented."}
+      {name:"Nob Hill (Murphy Bed)", lat:37.7929, lng:-122.4161, desc:"William Lawrence Murphy invented the fold-into-the-wall Murphy bed in his small San Francisco apartment in the late 1800s; exact address is not precisely documented.", src:"https://www.smithsonianmag.com/smithsonian-institution/curator-finds-murphy-beds-place-in-american-history-48350873/"}
     ]
   },
   museums: {
@@ -387,7 +386,7 @@ const CATEGORIES = {
       {name:"South Bay Historical Railroad Society", lat:37.3540, lng:-121.9430, desc:"Santa Clara's Edward Peterman Museum of Railroad History, preserving South Bay rail heritage.", src:"https://www.sbhrs.org/"},
       {name:"Museum of American Heritage", lat:37.4444, lng:-122.1575, desc:"Palo Alto museum of mechanical, electrical, and technological artifacts from the Civil War era through the mid-20th century.", src:"https://www.moah.org/"},
       {name:"Harris-Lass House Museum", lat:37.3465, lng:-121.9575, desc:"Santa Clara's last farm site, an 1865 Italianate farmhouse with barn and heritage orchard.", src:"https://harrislass.org/"},
-      {name:"Cupertino Historical Society & Museum", lat:37.3231, lng:-122.0330, desc:"Small-town museum on Cupertino's agricultural and community history, at the Quinlan Community Center, 10185 N. Stelling Rd.", src:"https://cupertino.prod.govaccess.org/visitors/visiting-cupertino/what-to-see"},
+      {name:"Cupertino Historical Society & Museum", lat:37.3231, lng:-122.0330, desc:"Small-town museum on Cupertino's agricultural and community history, at the Quinlan Community Center, 10185 N. Stelling Rd.", src:"https://cupertinomuseum.org/"},
       {name:"Sunnyvale Heritage Park Museum", lat:37.3688, lng:-122.0363, desc:"Replica of the 1850 Bay View Ranch house of Sunnyvale founder Martin Murphy Jr.", src:"https://en.wikipedia.org/wiki/Sunnyvale_Heritage_Park_Museum"},
       {name:"Euphrat Museum of Art", lat:37.3189, lng:-122.0456, desc:"Contemporary art museum at De Anza College, Cupertino.", src:"https://www.deanza.edu/euphrat/"},
       {name:"Intel Museum", lat:37.3875, lng:-121.9636, desc:"Free museum at Intel's Robert Noyce Building headquarters, 2200 Mission College Blvd, Santa Clara, tracing the microchip and Silicon Valley's history.", src:"https://www.intel.com/content/www/us/en/company-overview/intel-museum.html"},
@@ -398,7 +397,7 @@ const CATEGORIES = {
       {name:"Dublin Heritage Park and Museums", lat:37.7021, lng:-121.9310, desc:"Dublin park and museum complex preserving the city's pioneer and Old St. Raymond's church history, at Dublin Blvd and Donlon Way.", src:"https://www.dublin.ca.gov/269/Dublin-Heritage-Park-Museums"},
       {name:"Walt Disney Family Museum", lat:37.7994, lng:-122.4657, desc:"Presidio of San Francisco museum on the life and legacy of Walt Disney, at 104 Montgomery Street.", src:"https://en.wikipedia.org/wiki/The_Walt_Disney_Family_Museum"},
       {name:"Cable Car Museum", lat:37.7947, lng:-122.4114, desc:"San Francisco museum and working powerhouse for the city's cable car system, at 1201 Mason Street, Nob Hill, free admission.", src:"https://en.wikipedia.org/wiki/San_Francisco_Cable_Car_Museum"},
-      {name:"Museum of 3D Illusions", lat:37.8090, lng:-122.4155, desc:"Fisherman's Wharf museum of interactive 3D mural illusions, at 55-61 Jefferson Street.", src:"https://sfillusions.com/"},
+      {name:"Museum of 3D Illusions", lat:37.8090, lng:-122.4155, desc:"Fisherman's Wharf museum of interactive 3D mural illusions, at 55-61 Jefferson Street.", src:"https://www.instagram.com/museumofillusions.usa/?hl=en"},
       {name:"Mus\u00e9e M\u00e9canique", lat:37.8093, lng:-122.4161, desc:"Fisherman's Wharf collection of over 300 antique coin-operated arcade and carnival machines, near Pier 45, free admission.", src:"https://en.wikipedia.org/wiki/Mus%C3%A9e_M%C3%A9canique"},
       {name:"Pacific Pinball Museum", lat:37.7737, lng:-122.2766, desc:"Alameda museum and playable collection of pinball machines dating back to the 1940s, at 1510 Webster Street.", src:"https://en.wikipedia.org/wiki/Pacific_Pinball_Museum"},
       {name:"Museum of Art and Digital Entertainment (MADE)", lat:37.8022, lng:-122.2733, desc:"Oakland museum preserving and offering hands-on play of historic video games, at 921 Washington Street.", src:"https://en.wikipedia.org/wiki/Museum_of_Art_and_Digital_Entertainment"},
@@ -407,68 +406,88 @@ const CATEGORIES = {
   },
   parks: {
     label: "Parks, Trails, Zoos & Amusement Parks", color:"#3F7D4A",
-    source: "https://en.wikipedia.org/wiki/Category:Parks_in_the_San_Francisco_Bay_Area",
     items: [
-      {name:"Golden Gate Park", lat:37.7694, lng:-122.4862, desc:"1,000+ acre urban park spanning San Francisco's west side."},
-      {name:"Muir Woods National Monument", lat:37.8965, lng:-122.5808, desc:"Old-growth coast redwood grove in Marin County."},
-      {name:"Mount Tamalpais State Park", lat:37.9235, lng:-122.5965, desc:"Ridge trail views across Marin and the Bay."},
-      {name:"Point Reyes National Seashore", lat:38.0400, lng:-122.8078, desc:"Coastal wilderness on the Point Reyes peninsula."},
-      {name:"Mount Diablo State Park", lat:37.8817, lng:-121.9142, desc:"East Bay peak with sweeping valley views."},
-      {name:"Henry W. Coe State Park", lat:37.1867, lng:-121.5397, desc:"California's largest state park, in the South Bay hills."},
-      {name:"Big Basin Redwoods State Park", lat:37.1740, lng:-122.2246, desc:"California's oldest state park, in the Santa Cruz Mountains."},
-      {name:"Angel Island State Park", lat:37.8608, lng:-122.4326, desc:"Island state park in San Francisco Bay, reachable by ferry."},
-      {name:"Redwood Regional Park", lat:37.8144, lng:-122.1697, desc:"East Bay Regional Park District redwood grove in the Oakland hills."},
-      {name:"Tilden Regional Park", lat:37.8996, lng:-122.2427, desc:"East Bay Regional Park District park in the Berkeley hills, with a steam train and botanic garden."},
-      {name:"A\u00f1o Nuevo State Park", lat:37.1367, lng:-122.3400, desc:"San Mateo County coastal park famous for its elephant seal colony."},
-      {name:"Jack London State Historic Park", lat:38.3538, lng:-122.5386, desc:"Glen Ellen park preserving author Jack London's Sonoma County ranch."},
-      {name:"China Camp State Park", lat:38.0011, lng:-122.4708, desc:"Marin County park preserving a historic 19th-century Chinese shrimp-fishing village site."},
-      {name:"Alum Rock Park", lat:37.3891, lng:-121.8175, desc:"San Jose's oldest municipal park, established 1872, known for its mineral springs."},
-      {name:"California's Great America", lat:37.3947, lng:-121.9748, desc:"Santa Clara amusement park, operating since 1976."},
-      {name:"Six Flags Discovery Kingdom", lat:38.1108, lng:-122.2469, desc:"Vallejo amusement park and marine-animal park on the Napa River."},
-      {name:"Happy Hollow Park & Zoo", lat:37.3277, lng:-121.8763, desc:"San Jose's small zoo and amusement park in Kelley Park."},
-      {name:"Oakland Zoo", lat:37.7527, lng:-122.1538, desc:"East Bay zoo in the Oakland hills, part of Knowland Park."},
-      {name:"Palo Alto Junior Museum & Zoo", lat:37.4459, lng:-122.1467, desc:"Small children's museum and zoo in Palo Alto's Rinconada Park area."},
-      {name:"San Francisco Zoo", lat:37.7325, lng:-122.5030, desc:"San Francisco's zoo and gardens near Ocean Beach."},
-      {name:"Gilroy Gardens", lat:37.0058, lng:-121.6169, desc:"Gilroy family theme park built around horticulture, with garden-themed rides and a water play area."},
-      {name:"Antioch Water Park", lat:37.9915, lng:-121.7644, desc:"City-run water park in Antioch, open since 1996 with five pools and three slides. Closed for renovations for part of the 2026 season -- check current status before visiting."},
-      {name:"Sonoma TrainTown Railroad", lat:38.2775, lng:-122.4596, desc:"Sonoma tourist railroad and 10-acre amusement park with a quarter-scale miniature train."},
-      {name:"Six Flags Hurricane Harbor Concord", lat:37.9836, lng:-122.0692, desc:"Concord's seasonal water park, the Bay Area's largest, with 19 waterslides."},
-      {name:"Safari West", lat:38.4880, lng:-122.5870, desc:"Santa Rosa's 400-acre wildlife preserve of African species, with safari tours and overnight tent cabins."}
+      {name:"Golden Gate Park", lat:37.7694, lng:-122.4862, desc:"1,000+ acre urban park spanning San Francisco's west side.", src:"https://sfrecpark.org/770/Golden-Gate-Park"},
+      {name:"Muir Woods National Monument", lat:37.8965, lng:-122.5808, desc:"Old-growth coast redwood grove in Marin County.", src:"https://www.nps.gov/muwo/index.htm"},
+      {name:"Mount Tamalpais State Park", lat:37.9235, lng:-122.5965, desc:"Ridge trail views across Marin and the Bay.", src:"https://www.parks.ca.gov/?page_id=471"},
+      {name:"Point Reyes National Seashore", lat:38.0400, lng:-122.8078, desc:"Coastal wilderness on the Point Reyes peninsula.", src:"https://www.nps.gov/pore/index.htm"},
+      {name:"Mount Diablo State Park", lat:37.8817, lng:-121.9142, desc:"East Bay peak with sweeping valley views.", src:"https://www.parks.ca.gov/?page_id=517"},
+      {name:"Henry W. Coe State Park", lat:37.1867, lng:-121.5397, desc:"California's largest state park, in the South Bay hills.", src:"https://www.parks.ca.gov/?page_id=561"},
+      {name:"Big Basin Redwoods State Park", lat:37.1740, lng:-122.2246, desc:"California's oldest state park, in the Santa Cruz Mountains.", src:"https://www.parks.ca.gov/?page_id=540"},
+      {name:"Angel Island State Park", lat:37.8608, lng:-122.4326, desc:"Island state park in San Francisco Bay, reachable by ferry.", src:"https://www.parks.ca.gov/?page_id=468"},
+      {name:"Redwood Regional Park", lat:37.8144, lng:-122.1697, desc:"East Bay Regional Park District redwood grove in the Oakland hills.", src:"https://www.ebparks.org/parks/reinhardt-redwood"},
+      {name:"Tilden Regional Park", lat:37.8996, lng:-122.2427, desc:"East Bay Regional Park District park in the Berkeley hills, with a steam train and botanic garden.", src:"https://www.ebparks.org/parks/tilden"},
+      {name:"A\u00f1o Nuevo State Park", lat:37.1367, lng:-122.3400, desc:"San Mateo County coastal park famous for its elephant seal colony.", src:"https://www.parks.ca.gov/?page_id=523"},
+      {name:"Jack London State Historic Park", lat:38.3538, lng:-122.5386, desc:"Glen Ellen park preserving author Jack London's Sonoma County ranch.", src:"https://jacklondonpark.com/"},
+      {name:"China Camp State Park", lat:38.0011, lng:-122.4708, desc:"Marin County park preserving a historic 19th-century Chinese shrimp-fishing village site.", src:"https://www.parks.ca.gov/?page_id=466"},
+      {name:"Alum Rock Park", lat:37.3891, lng:-121.8175, desc:"San Jose's oldest municipal park, established 1872, known for its mineral springs.", src:"https://www.sanjoseca.gov/Home/Components/FacilityDirectory/FacilityDirectory/2088/2058"},
+      {name:"California's Great America", lat:37.3947, lng:-121.9748, desc:"Santa Clara amusement park, operating since 1976.", src:"https://www.cagreatamerica.com/"},
+      {name:"Six Flags Discovery Kingdom", lat:38.1108, lng:-122.2469, desc:"Vallejo amusement park and marine-animal park on the Napa River.", src:"https://www.sixflags.com/discoverykingdom"},
+      {name:"Happy Hollow Park & Zoo", lat:37.3277, lng:-121.8763, desc:"San Jose's small zoo and amusement park in Kelley Park.", src:"https://happyhollow.org/"},
+      {name:"Oakland Zoo", lat:37.7527, lng:-122.1538, desc:"East Bay zoo in the Oakland hills, part of Knowland Park.", src:"https://www.oaklandzoo.org/"},
+      {name:"Palo Alto Junior Museum & Zoo", lat:37.4459, lng:-122.1467, desc:"Small children's museum and zoo in Palo Alto's Rinconada Park area.", src:"https://www.paloaltozoo.org/Home"},
+      {name:"San Francisco Zoo", lat:37.7325, lng:-122.5030, desc:"San Francisco's zoo and gardens near Ocean Beach.", src:"https://www.sfzoo.org/"},
+      {name:"Gilroy Gardens", lat:37.0058, lng:-121.6169, desc:"Gilroy family theme park built around horticulture, with garden-themed rides and a water play area.", src:"https://www.gilroygardens.org/"},
+      {name:"Antioch Water Park", lat:37.9915, lng:-121.7644, desc:"City-run water park in Antioch, open since 1996 with five pools and three slides. Closed for renovations for part of the 2026 season -- check current status before visiting.", src:"https://www.antiochca.gov/703/Antioch-Water-Park"},
+      {name:"Sonoma TrainTown Railroad", lat:38.2775, lng:-122.4596, desc:"Sonoma tourist railroad and 10-acre amusement park with a quarter-scale miniature train.", src:"https://www.traintown.com/"},
+      {name:"Six Flags Hurricane Harbor Concord", lat:37.9836, lng:-122.0692, desc:"Concord's seasonal water park, the Bay Area's largest, with 19 waterslides.", src:"https://www.sixflags.com/hurricaneharborconcord"},
+      {name:"Safari West", lat:38.4880, lng:-122.5870, desc:"Santa Rosa's 400-acre wildlife preserve of African species, with safari tours and overnight tent cabins.", src:"https://safariwest.org/"},
+      {name:"Aqua Adventure Waterpark", lat:37.5491, lng:-121.9626, desc:"Fremont's city-operated waterpark in Central Park, with waterslides, pools, and interactive water play for a range of ages.", src:"https://www.fremont.gov/government/departments/parks-recreation/aqua-adventure/waterpark"}
     ]
   },
   hospitals: {
     label: "Hospitals & Health Systems", color:"#C25B5B",
-    source: "https://en.wikipedia.org/wiki/UCSF_Medical_Center",
     metricLabel: "licensed beds",
     items: [
-      {name:"UCSF Medical Center", lat:37.7631, lng:-122.4577, metric:796, desc:"Academic medical center at UCSF; 796 licensed beds across the Parnassus, Mission Bay, and Mount Zion campuses."},
-      {name:"Stanford Health Care", lat:37.4337, lng:-122.1750, metric:613, desc:"Stanford University Medical Center in Palo Alto; 613 licensed beds, Level I trauma center."},
-      {name:"Santa Clara Valley Medical Center", lat:37.2984, lng:-121.8547, metric:731, desc:"Santa Clara County's public safety-net hospital; 731 licensed beds, Level I adult / Level II pediatric trauma center."},
-      {name:"John Muir Medical Center, Walnut Creek", lat:37.9060, lng:-122.0553, metric:554, desc:"Contra Costa County's only trauma center; 554 licensed beds."},
-      {name:"Kaiser Permanente Oakland Medical Center", lat:37.8087, lng:-122.2632, metric:346, desc:"Kaiser's East Bay flagship and teaching hospital; 346 patient beds."},
-      {name:"MarinHealth Medical Center (Marin General)", lat:37.9472, lng:-122.5361, metric:327, desc:"Marin County's only full-service acute-care hospital; 327 licensed beds, Level III trauma center."},
-      {name:"El Camino Health, Mountain View", lat:37.3893, lng:-122.0813, metric:420, desc:"El Camino Health's main campus; 420 licensed beds. A second campus in Los Gatos adds 143 more beds, bringing the system to roughly 563 beds total."},
-      {name:"Alta Bates Summit Medical Center (Alta Bates Campus)", lat:37.8496, lng:-122.2540, metric:403, desc:"Sutter Health's Berkeley campus; 403 licensed beds. Part of a three-campus system spanning Berkeley (Alta Bates, Herrick) and Oakland (Summit)."},
-      {name:"Highland Hospital", lat:37.8010, lng:-122.2373, metric:316, desc:"Alameda Health System's Oakland public safety-net hospital and trauma center; roughly 316 licensed beds across its Highland and Fairmont campuses."}
+      {name:"UCSF Medical Center", lat:37.7631, lng:-122.4577, metric:796, desc:"Academic medical center at UCSF; 796 licensed beds across the Parnassus, Mission Bay, and Mount Zion campuses.", src:"https://www.ucsfhealth.org/locations"},
+      {name:"Stanford Health Care", lat:37.4337, lng:-122.1750, metric:613, desc:"Stanford University Medical Center in Palo Alto; 613 licensed beds, Level I trauma center.", src:"https://stanfordhealthcare.org/for-patients-visitors/locations-and-parking/stanford-hospital-300-pasteur.html"},
+      {name:"Santa Clara Valley Medical Center", lat:37.2984, lng:-121.8547, metric:731, desc:"Santa Clara County's public safety-net hospital; 731 licensed beds, Level I adult / Level II pediatric trauma center.", src:"https://scvmc.scvh.org/hospitals-clinics/santa-clara-valley-medical-center"},
+      {name:"John Muir Medical Center, Walnut Creek", lat:37.9060, lng:-122.0553, metric:554, desc:"Contra Costa County's only trauma center; 554 licensed beds.", src:"https://www.johnmuirhealth.com/locations/john-muir-medical-center-walnut-creek.html"},
+      {name:"Kaiser Permanente Oakland Medical Center", lat:37.8087, lng:-122.2632, metric:346, desc:"Kaiser's East Bay flagship and teaching hospital; 346 patient beds.", src:"https://healthy.kaiserpermanente.org/northern-california/facilities/oakland-medical-center-100344"},
+      {name:"MarinHealth Medical Center (Marin General)", lat:37.9472, lng:-122.5361, metric:327, desc:"Marin County's only full-service acute-care hospital; 327 licensed beds, Level III trauma center.", src:"https://www.mymarinhealth.org/locations/medical-center/"},
+      {name:"El Camino Health, Mountain View", lat:37.3893, lng:-122.0813, metric:420, desc:"El Camino Health's main campus; 420 licensed beds. A second campus in Los Gatos adds 143 more beds, bringing the system to roughly 563 beds total.", src:"https://www.getcare.elcaminohealth.org/locations/mountain-view-hospital-campus/2500-grant-rd/hospital-mv"},
+      {name:"Alta Bates Summit Medical Center (Alta Bates Campus)", lat:37.8496, lng:-122.2540, metric:403, desc:"Sutter Health's Berkeley campus; 403 licensed beds. Part of a three-campus system spanning Berkeley (Alta Bates, Herrick) and Oakland (Summit).", src:"https://www.sutterhealth.org/find-location/facility/alta-bates-summit-medical-center-alta-bates-campus-1043246519"},
+      {name:"Highland Hospital", lat:37.8010, lng:-122.2373, metric:316, desc:"Alameda Health System's Oakland public safety-net hospital and trauma center; roughly 316 licensed beds across its Highland and Fairmont campuses.", src:"https://www.alamedahealthsystem.org/locations/highland-hospital/"}
     ]
   },
   recreation: {
-    label: "Entertainment & Recreation (ice skating, bowling, mini golf, zip lines)", color:"#5A7DA6",
-    source: "https://en.wikipedia.org/wiki/San_Francisco_Bay_Area",
+    label: "Entertainment & Recreation Venues", color:"#5A7DA6",
+    systemColors: {
+      "Ice skating":"#4D90A8",
+      "Ice skating & bowling":"#6A7FB3",
+      "Bowling":"#8C5E9E",
+      "Mini golf & family fun":"#4F8A68",
+      "Arcade, dining & sports":"#D07845",
+      "Golf entertainment":"#B28A35",
+      "Immersive attraction":"#C75B7A",
+      "Zip line":"#3C7665"
+    },
     items: [
-      {name:"Winter Lodge", lat:37.4302, lng:-122.1367, desc:"Palo Alto's outdoor-covered ice rink, open since 1956."},
-      {name:"Oakland Ice Center", lat:37.8060, lng:-122.2661, desc:"Downtown Oakland's public ice rink and figure-skating/hockey training facility."},
-      {name:"Solar4America Ice (Sharks Ice)", lat:37.3908, lng:-121.9769, desc:"San Jose ice complex and training facility for the San Jose Sharks."},
-      {name:"Yerba Buena Ice Skating & Bowling Center", lat:37.7847, lng:-122.4033, desc:"San Francisco's Yerba Buena Gardens rink and bowling center."},
-      {name:"Bel Mateo Bowl", lat:37.5474, lng:-122.3125, desc:"Longtime San Mateo bowling alley."},
-      {name:"Holiday Ice Rink, Union Square", lat:37.7880, lng:-122.4075, desc:"Seasonal outdoor ice rink in San Francisco's Union Square, open in winter months."},
-      {name:"Golfland USA, Sunnyvale", lat:37.3688, lng:-122.0246, desc:"Sunnyvale mini-golf and family entertainment center."},
-      {name:"Golfland, Milpitas", lat:37.4270, lng:-121.9260, desc:"Milpitas mini-golf and arcade family entertainment center."},
-      {name:"Scandia Family Fun Center, Rohnert Park", lat:38.3467, lng:-122.7028, desc:"Sonoma County mini-golf, go-karts, and arcade center."},
-      {name:"Scandia Golfland, Fairfield", lat:38.2708, lng:-122.0669, desc:"Solano County mini-golf and family entertainment center."},
-      {name:"Boomers Livermore", lat:37.6620, lng:-121.7075, desc:"Livermore family entertainment center with go-karts, mini golf, and an arcade."},
-      {name:"Flyer Thrill Zone & 7D Experience", lat:37.8090, lng:-122.4100, desc:"Fisherman's Wharf motion-simulator attraction combining 3D visuals with virtual shooting and thrill effects."},
-      {name:"Sonoma Zipline Adventures", lat:38.4032, lng:-122.9563, desc:"Occidental zip-line canopy tour through Sonoma County redwoods, with two courses of lines, bridges, and rappels."}
+      {name:"Winter Lodge", system:"Ice skating", lat:37.4302, lng:-122.1367, desc:"Palo Alto's outdoor-covered ice rink, open since 1956.", src:"https://winterlodge.com/"},
+      {name:"Oakland Ice Center", system:"Ice skating", lat:37.8060, lng:-122.2661, desc:"Downtown Oakland's public ice rink and figure-skating/hockey training facility.", src:"https://www.oaklandice.com/home"},
+      {name:"Solar4America Ice (Sharks Ice)", system:"Ice skating", lat:37.3908, lng:-121.9769, desc:"San Jose ice complex and training facility for the San Jose Sharks.", src:"https://www.sharksiceatsanjose.com/"},
+      {name:"Yerba Buena Ice Skating & Bowling Center", system:"Ice skating & bowling", lat:37.7847, lng:-122.4033, desc:"San Francisco's Yerba Buena Gardens rink and bowling center.", src:"https://www.skatebowl.com/"},
+      {name:"Bel Mateo Bowl", system:"Bowling", lat:37.5474, lng:-122.3125, desc:"Longtime San Mateo bowling alley.", src:"https://www.belmateobowl.com/"},
+      {name:"Holiday Ice Rink, Union Square", system:"Ice skating", lat:37.7880, lng:-122.4075, desc:"Seasonal outdoor ice rink in San Francisco's Union Square, open in winter months.", src:"https://unionsquareicerink.com/"},
+      {name:"Golfland USA, Sunnyvale", system:"Mini golf & family fun", lat:37.3688, lng:-122.0246, desc:"Sunnyvale mini-golf and family entertainment center.", src:"https://www.golfland.com/sunnyvale/"},
+      {name:"Golfland, Milpitas", system:"Mini golf & family fun", lat:37.4270, lng:-121.9260, desc:"Milpitas mini-golf and arcade family entertainment center.", src:"https://www.golfland.com/milpitas/"},
+      {name:"Scandia Family Fun Center, Rohnert Park", system:"Mini golf & family fun", lat:38.3467, lng:-122.7028, desc:"Sonoma County mini-golf, go-karts, and arcade center.", src:"https://scandiafunland.com/home/"},
+      {name:"Scandia Golfland, Fairfield", system:"Mini golf & family fun", lat:38.2708, lng:-122.0669, desc:"Solano County mini-golf and family entertainment center.", src:"https://store.golfland.com/tickets/fairfield"},
+      {name:"Boomers Livermore", system:"Mini golf & family fun", lat:37.6620, lng:-121.7075, desc:"Livermore family entertainment center with go-karts, mini golf, and an arcade.", src:"https://boomersparks.com/livermore/"},
+      {name:"Flyer Thrill Zone & 7D Experience", system:"Immersive attraction", lat:37.8090, lng:-122.4100, desc:"Fisherman's Wharf motion-simulator attraction combining 3D visuals with virtual shooting and thrill effects.", src:"https://flyerthrillzone.com/7d-experience/"},
+      {name:"Sonoma Zipline Adventures", system:"Zip line", lat:38.4032, lng:-122.9563, desc:"Occidental zip-line canopy tour through Sonoma County redwoods, with two courses of lines, bridges, and rappels.", src:"https://www.sonomacanopytours.com/"},
+      {name:"Bowlmor Cupertino", system:"Bowling", lat:37.3248, lng:-122.0145, desc:"Cupertino bowling and entertainment venue with 32 lanes, an arcade, bocce, lounge, and sports bar.", src:"https://www.bowlmor.com/location/bowlmor-cupertino"},
+      {name:"Homestead Bowl & The X Bar", system:"Bowling", lat:37.3377, lng:-122.0438, desc:"Cupertino bowling center and live-entertainment venue with arcade games, food, drinks, karaoke, and The X Bar.", src:"https://www.homesteadbowl.com/"},
+      {name:"Emerald Hills Golfland, San Jose", system:"Mini golf & family fun", lat:37.2517, lng:-121.8708, desc:"San Jose family entertainment center with miniature golf, an arcade, snack bar, splash pad, and seasonal waterslides.", src:"https://www.golfland.com/sanjose/"},
+      {name:"Golden Tee Golfland, Castro Valley", system:"Mini golf & family fun", lat:37.6945, lng:-122.0791, desc:"Castro Valley family entertainment center with two miniature-golf courses and an arcade.", src:"https://www.golfland.com/castrovalley/"},
+      {name:"Dave & Buster's Milpitas - San Jose", system:"Arcade, dining & sports", lat:37.4140, lng:-121.8972, desc:"Great Mall arcade, restaurant, and sports-viewing venue in Milpitas.", src:"https://www.daveandbusters.com/us/en/about/locations/milpitas"},
+      {name:"Dave & Buster's Oakland", system:"Arcade, dining & sports", lat:37.7942, lng:-122.2774, desc:"Jack London Square arcade, restaurant, and sports-viewing venue in Oakland.", src:"https://www.daveandbusters.com/us/en/about/locations/oakland"},
+      {name:"Dave & Buster's Daly City", system:"Arcade, dining & sports", lat:37.6708, lng:-122.4707, desc:"Serramonte Center arcade, restaurant, and sports-viewing venue in Daly City.", src:"https://www.daveandbusters.com/us/en/about/locations/daly-city"},
+      {name:"Dave & Buster's Concord", system:"Arcade, dining & sports", lat:37.9762, lng:-122.0593, desc:"The Veranda arcade, restaurant, and sports-viewing venue in Concord.", src:"https://www.daveandbusters.com/us/en/about/locations/concord-california"},
+      {name:"Dave & Buster's Fairfield", system:"Arcade, dining & sports", lat:38.2610, lng:-122.0552, desc:"Solano Town Center arcade, restaurant, and sports-viewing venue in Fairfield.", src:"https://www.daveandbusters.com/us/en/about/locations/fairfield"},
+      {name:"Dave & Buster's Santa Rosa", system:"Arcade, dining & sports", lat:38.4371, lng:-122.7184, desc:"Santa Rosa Plaza arcade, restaurant, and sports-viewing venue.", src:"https://www.daveandbusters.com/us/en/about/locations/santa-rosa"},
+      {name:"Topgolf San Jose", system:"Golf entertainment", lat:37.4194, lng:-121.9798, desc:"Three-level San Jose golf-entertainment venue with 120 all-weather hitting bays, Toptracer games, dining, and a sports bar.", src:"https://topgolf.com/us/san-jose/"},
+      {name:"Topgolf San Francisco - Burlingame", system:"Golf entertainment", lat:37.5909, lng:-122.3572, desc:"Burlingame golf-entertainment venue with technology-enabled hitting bays, dining, and group-event spaces.", src:"https://topgolf.com/us/burlingame/"}
     ]
   },
   wildfires: {
@@ -476,24 +495,24 @@ const CATEGORIES = {
     source: "https://www.fire.ca.gov/incidents/",
     metricLabel: "acres burned",
     items: [
-      {name:"Oakland Hills Firestorm (Tunnel Fire), 1991", lat:37.8400, lng:-122.2100, metric:1600, desc:"Alameda County. Broke out near the Caldecott Tunnel Oct. 20, 1991; killed 25 people, destroyed roughly 2,900-3,000 homes -- still one of the most destructive urban firestorms in U.S. history."},
-      {name:"Tubbs Fire, 2017", lat:38.4700, lng:-122.7300, metric:36807, desc:"Napa & Sonoma counties. Swept into Santa Rosa's Coffey Park neighborhood overnight; 22 deaths, 5,636 structures destroyed."},
-      {name:"Nuns Fire, 2017", lat:38.3200, lng:-122.4600, metric:54382, desc:"Sonoma County. Burned concurrently with Tubbs and Atlas fires during October 2017's North Bay firestorm; 1 death, 1,355 structures destroyed."},
-      {name:"Kincade Fire, 2019", lat:38.7800, lng:-122.7200, metric:77758, desc:"Sonoma County. Ignited near The Geysers; prompted the largest evacuation in Sonoma County history (~180,000 people), 374 structures destroyed, no direct deaths."},
-      {name:"LNU Lightning Complex, 2020", lat:38.4300, lng:-122.1500, metric:363220, desc:"Napa, Sonoma, Solano, Yolo & Lake counties. Sparked by a mid-August dry-lightning siege; 6 deaths, about 1,491 structures destroyed."},
-      {name:"SCU Lightning Complex, 2020", lat:37.4500, lng:-121.5500, metric:396624, desc:"Santa Clara, Alameda & Contra Costa counties (plus counties further east). One of the largest wildfires in California history by acreage; 2 deaths."},
-      {name:"CZU Lightning Complex, 2020", lat:37.1730, lng:-122.2230, metric:86509, desc:"Santa Cruz & San Mateo counties. Burned through Big Basin Redwoods State Park; 1 death, about 1,490 structures destroyed."},
-      {name:"Glass Fire, 2020", lat:38.5200, lng:-122.4800, metric:67484, desc:"Napa & Sonoma counties. Damaged or destroyed numerous Napa Valley wineries and the Castello di Amorosa area; 1,520 structures destroyed, no direct deaths."}
+      {name:"Oakland Hills Firestorm (Tunnel Fire), 1991", lat:37.8400, lng:-122.2100, metric:1600, dateRange:"Oct. 19–23, 1991", durationDays:4, desc:"Alameda County. Broke out near the Caldecott Tunnel Oct. 20, 1991; killed 25 people, destroyed roughly 2,900-3,000 homes -- still one of the most destructive urban firestorms in U.S. history."},
+      {name:"Tubbs Fire, 2017", lat:38.4700, lng:-122.7300, metric:36807, dateRange:"Oct. 8–31, 2017", durationDays:23, desc:"Napa & Sonoma counties. Swept into Santa Rosa's Coffey Park neighborhood overnight; 22 deaths, 5,636 structures destroyed."},
+      {name:"Nuns Fire, 2017", lat:38.3200, lng:-122.4600, metric:54382, dateRange:"Oct. 8–30, 2017", durationDays:22, desc:"Sonoma County. Burned concurrently with Tubbs and Atlas fires during October 2017's North Bay firestorm; 1 death, 1,355 structures destroyed."},
+      {name:"Kincade Fire, 2019", lat:38.7800, lng:-122.7200, metric:77758, dateRange:"Oct. 23–Nov. 6, 2019", durationDays:14, desc:"Sonoma County. Ignited near The Geysers; prompted the largest evacuation in Sonoma County history (~180,000 people), 374 structures destroyed, no direct deaths."},
+      {name:"LNU Lightning Complex, 2020", lat:38.4300, lng:-122.1500, metric:363220, dateRange:"Aug. 17–Oct. 2, 2020", durationDays:46, desc:"Napa, Sonoma, Solano, Yolo & Lake counties. Sparked by a mid-August dry-lightning siege; 6 deaths, about 1,491 structures destroyed."},
+      {name:"SCU Lightning Complex, 2020", lat:37.4500, lng:-121.5500, metric:396624, dateRange:"Aug. 16–Oct. 1, 2020", durationDays:46, desc:"Santa Clara, Alameda & Contra Costa counties (plus counties further east). One of the largest wildfires in California history by acreage; 2 deaths."},
+      {name:"CZU Lightning Complex, 2020", lat:37.1730, lng:-122.2230, metric:86509, dateRange:"Aug. 16–Sept. 22, 2020", durationDays:37, desc:"Santa Cruz & San Mateo counties. Burned through Big Basin Redwoods State Park; 1 death, about 1,490 structures destroyed."},
+      {name:"Glass Fire, 2020", lat:38.5200, lng:-122.4800, metric:67484, dateRange:"Sept. 27–Oct. 20, 2020", durationDays:23, desc:"Napa & Sonoma counties. Damaged or destroyed numerous Napa Valley wineries and the Castello di Amorosa area; 1,520 structures destroyed, no direct deaths."}
     ]
   },
   transit: {
     label: "Transit Hubs (rail + ferry, multiple systems)", color:"#2F5F8A",
-    source: "https://www.bart.gov/about/reports/ridership",
     metricLabel: "avg. weekday ridership (where reported)",
     systemColors: {
       "BART":"#2F5F8A", "Caltrain":"#C77B4D", "SMART":"#5E8C3A", "ACE":"#8B5A2B",
       "VTA Light Rail":"#00838F", "Muni Metro":"#B5382E", "Ferry":"#1B6E8C",
-      "Amtrak":"#6B4C9A", "AirTrain":"#7A7A7A", "Valley Link (planned)":"#C49A3A"
+      "Amtrak":"#6246B5", "AirTrain":"#7A7A7A", "Valley Link (planned)":"#C49A3A",
+      "VTA Bus Hub":"#E0643F", "Regional Bus Hub":"#C2185B"
     },
     items: [
       {name:"12th St. Oakland City Center", system:"BART", lat:37.8036, lng:-122.2716, metric:5507, desc:"BART station, downtown Oakland."},
@@ -603,7 +622,7 @@ const CATEGORIES = {
       {name:"Vallejo", system:"Ferry", lat:38.1074, lng:-122.2564, desc:"San Francisco Bay Ferry terminal, Vallejo; one of the system's longest and busiest commuter routes."},
       {name:"Richmond", system:"Ferry", lat:37.9083, lng:-122.3542, desc:"San Francisco Bay Ferry terminal, Richmond, opened 2019."},
       {name:"South San Francisco", system:"Ferry", lat:37.6635, lng:-122.3796, desc:"San Francisco Bay Ferry terminal, Oyster Point, South San Francisco."},
-      {name:"Redwood City", system:"Ferry", lat:37.5077, lng:-122.2119, desc:"San Francisco Bay Ferry terminal, Redwood City, opened 2025 as the system's southernmost stop."},
+      {name:"Redwood City", system:"Ferry", lat:37.5077, lng:-122.2119, desc:"Planned San Francisco Bay Ferry terminal at the Port of Redwood City; design and environmental review are underway following limited 2024 pilot service."},
       {name:"Angel Island", system:"Ferry", lat:37.8608, lng:-122.4326, desc:"Seasonal ferry terminal serving Angel Island State Park."},
       {name:"Sausalito", system:"Ferry", lat:37.8590, lng:-122.4852, desc:"Golden Gate Ferry terminal, Sausalito."},
       {name:"Larkspur Ferry Terminal", system:"Ferry", lat:37.9453, lng:-122.5069, desc:"Golden Gate Ferry terminal, Larkspur, timed to connect with SMART trains."},
@@ -623,19 +642,161 @@ const CATEGORIES = {
       {name:"Isabel Ave (Valley Link, planned)", system:"Valley Link (planned)", lat:37.6890, lng:-121.7960, desc:"Planned Valley Link station in Livermore. Phase 1A (Dublin/Pleasanton to Livermore) targeted for construction start around 2028, per 2025 project updates; not yet funded to completion."},
       {name:"Southfront Road (Valley Link, planned)", system:"Valley Link (planned)", lat:37.6770, lng:-121.7550, desc:"Planned Valley Link station, eastern Livermore, connecting toward Mountain House and Tracy in San Joaquin County."},
 
-      {name:"Mountain View (VTA)", system:"VTA Light Rail", lat:37.3947, lng:-122.0764, desc:"Northern terminus of VTA's Mountain View\u2013Winchester line, sharing the station with Caltrain."},
-      {name:"Milpitas", system:"VTA Light Rail", lat:37.4106, lng:-121.8912, desc:"VTA light rail station interchange with BART's Berryessa/Milpitas extension."},
-      {name:"Baypointe", system:"VTA Light Rail", lat:37.4128, lng:-121.9297, desc:"VTA light rail interchange station, north San Jose."},
-      {name:"Alum Rock", system:"VTA Light Rail", lat:37.3702, lng:-121.8534, desc:"Eastern terminus of VTA's Alum Rock\u2013Santa Teresa line, San Jose."},
-      {name:"Santa Teresa", system:"VTA Light Rail", lat:37.2260, lng:-121.7458, desc:"Southern terminus of VTA's Alum Rock\u2013Santa Teresa line, south San Jose."},
-      {name:"Convention Center", system:"VTA Light Rail", lat:37.3305, lng:-121.8895, desc:"VTA light rail station serving the San Jose McEnery Convention Center, downtown San Jose."},
-      {name:"Santa Clara (VTA)", system:"VTA Light Rail", lat:37.3540, lng:-121.9366, desc:"VTA light rail station shared with Caltrain and Amtrak, downtown Santa Clara."},
-      {name:"Winchester", system:"VTA Light Rail", lat:37.3055, lng:-121.9505, desc:"Southwestern terminus of VTA's Mountain View\u2013Winchester line, Campbell/San Jose border."},
-      {name:"Ohlone\u2013Chynoweth", system:"VTA Light Rail", lat:37.2626, lng:-121.8317, desc:"VTA light rail interchange station, south San Jose."},
-      {name:"Tasman", system:"VTA Light Rail", lat:37.4053, lng:-121.9770, desc:"VTA light rail station near Levi's Stadium and the Santa Clara Convention Center."},
+      // Complete current VTA light-rail network: 59 stations from VTA's July 2026 GTFS feed.
+      {name:"Alder",system:"VTA Light Rail",lat:37.413572,lng:-121.917118,desc:"VTA light rail station."},
+      {name:"Alum Rock",system:"VTA Light Rail",lat:37.358429,lng:-121.832325,desc:"Orange Line terminus and bus transfer point."},
+      {name:"Bascom",system:"VTA Light Rail",lat:37.299851,lng:-121.929830,desc:"VTA Green Line station."},
+      {name:"Baypointe",system:"VTA Light Rail",lat:37.410438,lng:-121.942311,desc:"VTA light rail interchange station."},
+      {name:"Bayshore/NASA",system:"VTA Light Rail",lat:37.404327,lng:-122.049167,desc:"VTA Orange Line station."},
+      {name:"Berryessa",system:"VTA Light Rail",lat:37.388238,lng:-121.862310,desc:"VTA Orange Line station."},
+      {name:"Blossom Hill",system:"VTA Light Rail",lat:37.252793,lng:-121.841085,desc:"VTA Blue Line station."},
+      {name:"Bonaventura",system:"VTA Light Rail",lat:37.388053,lng:-121.929303,desc:"VTA Blue and Green Line station."},
+      {name:"Borregas",system:"VTA Light Rail",lat:37.411664,lng:-122.018027,desc:"VTA Orange Line station."},
+      {name:"Branham",system:"VTA Light Rail",lat:37.266765,lng:-121.859260,desc:"VTA Blue Line station."},
+      {name:"Downtown Campbell",system:"VTA Light Rail",lat:37.285900,lng:-121.943030,desc:"VTA Green Line station."},
+      {name:"Capitol",system:"VTA Light Rail",lat:37.274581,lng:-121.863137,desc:"VTA Blue Line station."},
+      {name:"Champion",system:"VTA Light Rail",lat:37.408898,lng:-121.951936,desc:"VTA light rail station."},
+      {name:"Children’s Discovery Museum",system:"VTA Light Rail",lat:37.327765,lng:-121.893665,desc:"VTA light rail station in downtown San José."},
+      {name:"Cisco Way",system:"VTA Light Rail",lat:37.412348,lng:-121.928312,desc:"VTA Orange Line station."},
+      {name:"Civic Center",system:"VTA Light Rail",lat:37.351380,lng:-121.901957,desc:"VTA Blue and Green Line station."},
+      {name:"Component",system:"VTA Light Rail",lat:37.382779,lng:-121.925337,desc:"VTA Blue and Green Line station."},
+      {name:"Convention Center",system:"VTA Light Rail",lat:37.330168,lng:-121.889750,desc:"Station serving the San José McEnery Convention Center."},
+      {name:"Cottle",system:"VTA Light Rail",lat:37.242678,lng:-121.802982,desc:"VTA Blue Line station."},
+      {name:"Cropley",system:"VTA Light Rail",lat:37.403327,lng:-121.882075,desc:"VTA Orange Line station."},
+      {name:"Crossman",system:"VTA Light Rail",lat:37.408841,lng:-122.011180,desc:"VTA Orange Line station."},
+      {name:"Curtner",system:"VTA Light Rail",lat:37.293389,lng:-121.872500,desc:"VTA Blue Line station and bus transfer point."},
+      {name:"San Jose Diridon (VTA)",system:"VTA Light Rail",lat:37.328711,lng:-121.903501,desc:"VTA Green Line stop at the regional rail and bus hub."},
+      {name:"Fair Oaks",system:"VTA Light Rail",lat:37.402578,lng:-122.008640,desc:"VTA Orange Line station."},
+      {name:"Fruitdale",system:"VTA Light Rail",lat:37.310482,lng:-121.918020,desc:"VTA Green Line station."},
+      {name:"Gish",system:"VTA Light Rail",lat:37.361732,lng:-121.909638,desc:"VTA Blue and Green Line station."},
+      {name:"Great America",system:"VTA Light Rail",lat:37.403468,lng:-121.974908,desc:"VTA station serving Levi’s Stadium and Great America."},
+      {name:"Great Mall",system:"VTA Light Rail",lat:37.414390,lng:-121.902123,desc:"VTA Orange Line station in Milpitas."},
+      {name:"Hamilton",system:"VTA Light Rail",lat:37.293691,lng:-121.936576,desc:"VTA Green Line station."},
+      {name:"Hostetter",system:"VTA Light Rail",lat:37.395116,lng:-121.869629,desc:"VTA Orange Line station."},
+      {name:"Japantown/Ayer",system:"VTA Light Rail",lat:37.344964,lng:-121.897116,desc:"VTA Blue and Green Line station."},
+      {name:"Karina",system:"VTA Light Rail",lat:37.375423,lng:-121.919867,desc:"VTA Blue and Green Line station."},
+      {name:"Lick Mill",system:"VTA Light Rail",lat:37.407795,lng:-121.962925,desc:"VTA light rail station."},
+      {name:"Lockheed Martin",system:"VTA Light Rail",lat:37.409769,lng:-122.027025,desc:"VTA Orange Line station."},
+      {name:"McKee",system:"VTA Light Rail",lat:37.371854,lng:-121.844783,desc:"VTA Orange Line station."},
+      {name:"Metro/Airport",system:"VTA Light Rail",lat:37.369515,lng:-121.915452,desc:"VTA station with airport bus connection."},
+      {name:"Middlefield",system:"VTA Light Rail",lat:37.395428,lng:-122.052210,desc:"VTA Orange Line station."},
+      {name:"Milpitas",system:"VTA Light Rail",lat:37.408760,lng:-121.891008,desc:"VTA light rail and BART interchange."},
+      {name:"Moffett Park",system:"VTA Light Rail",lat:37.402367,lng:-122.033460,desc:"VTA Orange Line station."},
+      {name:"Mountain View (VTA)",system:"VTA Light Rail",lat:37.395111,lng:-122.077192,desc:"Orange Line terminus with Caltrain and bus connections."},
+      {name:"Ohlone–Chynoweth",system:"VTA Light Rail",lat:37.257731,lng:-121.860292,desc:"VTA Blue Line station and bus transfer point."},
+      {name:"Old Ironsides",system:"VTA Light Rail",lat:37.403334,lng:-121.979862,desc:"VTA light rail station."},
+      {name:"Orchard",system:"VTA Light Rail",lat:37.394908,lng:-121.934358,desc:"VTA Blue and Green Line station."},
+      {name:"Paseo de San Antonio",system:"VTA Light Rail",lat:37.333130,lng:-121.887580,desc:"Downtown San José VTA light rail station."},
+      {name:"Penitencia Creek",system:"VTA Light Rail",lat:37.381739,lng:-121.855221,desc:"VTA Orange Line station."},
+      {name:"Race",system:"VTA Light Rail",lat:37.317155,lng:-121.910753,desc:"VTA Green Line station."},
+      {name:"Reamwood",system:"VTA Light Rail",lat:37.403549,lng:-121.988555,desc:"VTA Orange Line station."},
+      {name:"River Oaks",system:"VTA Light Rail",lat:37.402010,lng:-121.939513,desc:"VTA Blue and Green Line station."},
+      {name:"St. James",system:"VTA Light Rail",lat:37.338380,lng:-121.891490,desc:"Downtown San José VTA light rail station."},
+      {name:"San Fernando",system:"VTA Light Rail",lat:37.330367,lng:-121.898116,desc:"Downtown San José VTA Green Line station."},
+      {name:"Santa Clara (VTA)",system:"VTA Light Rail",lat:37.335860,lng:-121.889630,desc:"Downtown San José VTA light rail station."},
+      {name:"Santa Teresa",system:"VTA Light Rail",lat:37.236535,lng:-121.789248,desc:"Southern Blue Line terminus and bus transfer point."},
+      {name:"Snell",system:"VTA Light Rail",lat:37.247852,lng:-121.830973,desc:"VTA Blue Line station."},
+      {name:"Tamien (VTA)",system:"VTA Light Rail",lat:37.311617,lng:-121.884585,desc:"VTA light rail, Caltrain, and bus interchange."},
+      {name:"Tasman",system:"VTA Light Rail",lat:37.408669,lng:-121.944463,desc:"VTA light rail interchange station."},
+      {name:"Vienna",system:"VTA Light Rail",lat:37.403377,lng:-121.999589,desc:"VTA Orange Line station."},
+      {name:"Virginia",system:"VTA Light Rail",lat:37.319828,lng:-121.890104,desc:"VTA Blue Line station."},
+      {name:"Whisman",system:"VTA Light Rail",lat:37.392205,lng:-122.058220,desc:"VTA Orange Line station."},
+      {name:"Winchester",system:"VTA Light Rail",lat:37.279614,lng:-121.947981,desc:"Southwestern Green Line terminus in Campbell."},
+
+      // Regional-scale bus hubs: major transfer centers, not every curbside stop.
+      {name:"Alum Rock Transit Center",system:"VTA Bus Hub",operator:"VTA",lat:37.3704,lng:-121.8339,desc:"Major East San José bus transfer center.",src:"https://www.vta.org/go/stations"},
+      {name:"Eastridge Transit Center",system:"VTA Bus Hub",operator:"VTA",lat:37.3258,lng:-121.8134,desc:"Major VTA bus hub serving Eastridge and eastern San José.",src:"https://www.vta.org/go/routes/26"},
+      {name:"Valley Fair Transit Center",system:"VTA Bus Hub",operator:"VTA",lat:37.326750,lng:-121.947919,desc:"VTA bus transfer center at Valley Fair.",src:"https://www.vta.org/go/stations/valley-fair-transit-center"},
+      {name:"West Valley College Transit Center",system:"VTA Bus Hub",operator:"VTA",lat:37.2636,lng:-122.0111,desc:"VTA bus transfer center at West Valley College.",src:"https://www.vta.org/go/stations"},
+      {name:"Salesforce Transit Center",system:"Regional Bus Hub",operator:"AC Transit, Muni, Golden Gate Transit, SamTrans",lat:37.7897,lng:-122.3960,desc:"Downtown San Francisco’s regional bus terminal.",src:"https://salesforcetransitcenter.com/transportation/"},
+      {name:"San Rafael Transit Center",system:"Regional Bus Hub",operator:"Golden Gate Transit, Marin Transit",lat:37.9707,lng:-122.5228,desc:"Central Marin’s principal regional bus transfer center.",src:"https://www.goldengate.org/district/district-projects/san-rafael-transit-center/"},
+      {name:"Santa Rosa Transit Mall",system:"Regional Bus Hub",operator:"Santa Rosa CityBus, Sonoma County Transit, Golden Gate Transit",lat:38.438308,lng:-122.714622,desc:"Downtown Santa Rosa transfer center served by three bus systems.",src:"https://511.org/travel/transit/centers/santa-rosa-transit-mall"},
+      {name:"Soscol Gateway Transit Center",system:"Regional Bus Hub",operator:"Vine Transit",lat:38.2967,lng:-122.2798,desc:"Napa County’s principal local and regional bus transfer center.",src:"https://511.org/transit/centers/napa-soscol-gateway-transit-center"},
     ]
   }
 };
+
+// Attach an operator-specific source to every transit record. BART and
+// Caltrain use compact internal station identifiers; the other operators use
+// readable station slugs or a station-scoped search on their official site.
+const BART_STATION_CODES = {
+  "12th St. Oakland City Center":"12th", "16th Street Mission":"16th", "19th Street Oakland":"19th", "24th Street Mission":"24th",
+  "Antioch":"antc", "Ashby":"ashb", "Balboa Park":"balb", "Bay Fair":"bayf", "Downtown Berkeley":"dbrk",
+  "Berryessa/North San José":"bern", "Castro Valley":"cast", "Civic Center/UN Plaza":"civc", "Coliseum":"cols", "Colma":"colm",
+  "Concord":"conc", "Daly City":"daly", "Dublin/Pleasanton":"dubl", "El Cerrito del Norte":"deln", "El Cerrito Plaza":"plza",
+  "Embarcadero":"embr", "Fremont":"frem", "Fruitvale":"frtv", "Glen Park":"glen", "Hayward":"hayw", "Lafayette":"lafy",
+  "Lake Merritt":"lake", "MacArthur":"mcar", "Millbrae":"mlbr", "Milpitas":"mlpt", "Montgomery Street":"mont",
+  "North Berkeley":"nbrk", "North Concord/Martinez":"ncon", "Oakland International Airport":"oakl", "Orinda":"orin",
+  "Pittsburg/Bay Point":"pitt", "Pittsburg Center":"pctr", "Pleasant Hill/Contra Costa Centre":"phil", "Powell Street":"powl",
+  "Richmond":"rich", "Rockridge":"rock", "San Bruno":"sbrn", "San Francisco International Airport":"sfia", "San Leandro":"sanl",
+  "South Hayward":"shay", "South San Francisco":"ssan", "Union City":"ucty", "Walnut Creek":"wcrk",
+  "Warm Springs/South Fremont":"warm", "West Dublin/Pleasanton":"wdub", "West Oakland":"woak"
+};
+const CALTRAIN_STATION_SLUGS = {
+  "San Francisco (4th & King)":"sanfrancisco", "22nd Street":"22ndstreet", "South San Francisco (Caltrain)":"southsf",
+  "San Bruno (Caltrain)":"sanbruno", "Millbrae (Caltrain)":"millbrae", "Belmont":"belmont", "San Carlos":"sancarlos",
+  "Redwood City":"redwoodcity", "Menlo Park":"menlopark", "Palo Alto":"paloalto", "California Avenue":"californiaave",
+  "San Antonio":"sanantonio", "Lawrence":"lawrence", "San Jose Diridon":"sjdiridon", "Tamien":"tamien",
+  "College Park":"collegepark", "Capitol":"capitol", "Blossom Hill":"blossomhill"
+};
+const AMTRAK_STATION_CODES = {
+  "Martinez":"mtz", "Suisun – Fairfield":"sui", "Fairfield – Vacaville":"ffv", "Richmond (Amtrak)":"ric",
+  "Emeryville":"emy", "Oakland – Jack London Sq (Amtrak)":"okj"
+};
+const FERRY_TERMINAL_SOURCES = {
+  "San Francisco Ferry Building":"https://sanfranciscobayferry.com/downtown-san-francisco-ferry-terminal/",
+  "Oakland – Jack London Square":"https://sanfranciscobayferry.com/terminal/oakland-ferry-terminal/",
+  "Alameda – Main Street":"https://sanfranciscobayferry.com/terminal/main-street-alameda-ferry-terminal/",
+  "Alameda – Seaplane Lagoon":"https://sanfranciscobayferry.com/routes-schedules/alameda-seaplane/",
+  "Vallejo":"https://sanfranciscobayferry.com/routes-schedules/vallejo/",
+  "Richmond":"https://sanfranciscobayferry.com/terminal/richmond-ferry-terminal/",
+  "South San Francisco":"https://sanfranciscobayferry.com/routes-schedules/south-san-francisco/",
+  "Redwood City":"https://sanfranciscobayferry.com/project/redwood-city-ferry-study/",
+  "Angel Island":"https://www.goldengate.org/ferry/angel-island-ferry/",
+  "Sausalito":"https://www.goldengate.org/ferry/riding-the-ferry/terminal-locations-parking/",
+  "Larkspur Ferry Terminal":"https://www.goldengate.org/ferry/riding-the-ferry/terminal-locations-parking/",
+  "Tiburon":"https://www.goldengate.org/ferry/riding-the-ferry/terminal-locations-parking/"
+};
+const VALLEY_LINK_STATION_SOURCES = {
+  "Isabel Ave (Valley Link, planned)":"https://www.valleylinkrail.com/environmental-ceqa",
+  "Southfront Road (Valley Link, planned)":"https://www.valleylinkrail.com/environmental-ceqa"
+};
+const VTA_STATION_SOURCE_OVERRIDES = {
+  "Baypointe":"https://www.vta.org/go/vta-light-rail-stations",
+  "Milpitas":"https://www.vta.org/go/stations/milpitas-transit-center",
+  "Convention Center":"https://www.vta.org/go/stations/convention-center-station",
+  "Tasman":"https://www.vta.org/go/stations/tasman-station",
+  "Mountain View (VTA)":"https://www.vta.org/go/stations/mountain-view",
+  "Alum Rock":"https://www.vta.org/go/stations/alum-rock",
+  "Santa Teresa":"https://www.vta.org/go/stations/santa-teresa",
+  "Santa Clara (VTA)":"https://www.vta.org/go/stations/santa-clara",
+  "Winchester":"https://www.vta.org/go/stations/winchester",
+  "Ohlone–Chynoweth":"https://www.vta.org/go/stations/ohlone-chynoweth"
+};
+function transitSlug(name){
+  return name.normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\([^)]*\)/g,'').replace(/&/g,' and ')
+    .replace(/[^a-zA-Z0-9]+/g,'-').replace(/^-|-$/g,'').toLowerCase();
+}
+function transitStationSource(pt){
+  if(pt.system === 'BART') return `https://www.bart.gov/stations/${BART_STATION_CODES[pt.name]}`;
+  if(pt.system === 'Caltrain') return `https://www.caltrain.com/station/${CALTRAIN_STATION_SLUGS[pt.name]}`;
+  if(pt.system === 'SMART') return `https://sonomamarintrain.org/stations/${transitSlug(pt.name)}/`;
+  if(pt.system === 'ACE'){
+    if(pt.name === 'San Jose Diridon (ACE)') return 'https://acerail.com/stations/';
+    if(pt.name === 'Santa Clara – Great America') return 'https://acerail.com/saturdays_great_america/';
+    return `https://acerail.com/stations/${transitSlug(pt.name.replace(' (Centerville)','').replace(' (ACE)',''))}/`;
+  }
+  if(pt.system === 'Amtrak') return `https://www.amtrak.com/stations/${AMTRAK_STATION_CODES[pt.name]}`;
+  // VTA does not maintain a stable individual page for every station. Use its
+  // live 59-station directory as the reliable fallback instead of guessing URLs.
+  if(pt.system === 'VTA Light Rail') return VTA_STATION_SOURCE_OVERRIDES[pt.name] || 'https://www.vta.org/go/vta-light-rail-stations';
+  if(pt.system === 'Muni Metro') return `https://www.sfmta.com/search?search=${encodeURIComponent(pt.name + ' station')}`;
+  if(pt.system === 'Ferry') return FERRY_TERMINAL_SOURCES[pt.name];
+  if(pt.system === 'AirTrain') return `https://www.flysfo.com/search?search=${encodeURIComponent(pt.name)}`;
+  if(pt.system === 'Valley Link (planned)') return VALLEY_LINK_STATION_SOURCES[pt.name];
+  return 'https://511.org/transit';
+}
+CATEGORIES.transit.items.forEach(pt=>{ pt.src = pt.src || transitStationSource(pt); });
 
 // City-level 2020 Census data for all 101 incorporated Bay Area cities/towns,
 // sourced from the Wikipedia "List of cities and towns in the San Francisco
@@ -3480,6 +3641,27 @@ function openElectionDrawer(c, e){
   document.getElementById('drawer').classList.add('open');
 }
 
+function wildfireMarkerIcon(pt){
+  const acres = `${pt.metric.toLocaleString()} acres burned`;
+  const duration = `${pt.durationDays} days`;
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="216" height="60" viewBox="0 0 216 60">
+    <filter id="s" x="-20%" y="-30%" width="150%" height="170%"><feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#17292d" flood-opacity=".28"/></filter>
+    <g filter="url(#s)">
+      <rect x="40" y="5" width="172" height="43" rx="9" fill="#fffaf0" stroke="#b84a35" stroke-width="1.5"/>
+      <path d="M40 27 31 33 40 37Z" fill="#fffaf0" stroke="#b84a35" stroke-width="1.5" stroke-linejoin="round"/>
+      <path d="M22 54C10 51 5 42 10 32c2-5 7-8 8-15 6 4 8 9 7 15 4-3 6-7 6-12 9 10 12 20 7 27-3 5-8 7-16 7Z" fill="#c84332" stroke="#712d2a" stroke-width="1.4"/>
+      <path d="M22 50c-6-2-8-7-5-12 2-3 4-5 4-9 5 4 8 10 5 15 3-1 5-3 6-6 2 7-2 11-10 12Z" fill="#f3aa45"/>
+    </g>
+    <text x="51" y="23" font-family="Arial, sans-serif" font-size="12" font-weight="700" fill="#5f2528">${acres}</text>
+    <text x="51" y="39" font-family="Arial, sans-serif" font-size="11" fill="#5e6663">Duration: ${duration}</text>
+  </svg>`;
+  return {
+    url:`data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`,
+    scaledSize:new google.maps.Size(216,60),
+    anchor:new google.maps.Point(22,54)
+  };
+}
+
 function selectCategory(key){
   const _tsp3 = document.getElementById('timeSliderPanel'); if(_tsp3) _tsp3.style.display = 'none';
   document.getElementById('sizeToggle').style.display = 'none';
@@ -3505,8 +3687,12 @@ function selectCategory(key){
     const color = (cat.systemColors && pt.system) ? cat.systemColors[pt.system] : cat.color;
     const marker = new google.maps.Marker({
       position:{lat:pt.lat, lng:pt.lng}, map,
-      title: (pt.metric !== undefined) ? `${pt.name}: ${pt.metric.toLocaleString()} ${cat.metricLabel||''}` : pt.name,
-      icon:{ path: google.maps.SymbolPath.CIRCLE, scale:radius, fillColor:color, fillOpacity: hasMetric ? 0.75 : 0.9, strokeColor:"#1B2A2E", strokeWeight:1.2 }
+      title: key === 'wildfires'
+        ? `${pt.name}: ${pt.metric.toLocaleString()} acres burned; ${pt.durationDays} days (${pt.dateRange})`
+        : ((pt.metric !== undefined) ? `${pt.name}: ${pt.metric.toLocaleString()} ${cat.metricLabel||''}` : pt.name),
+      icon:key === 'wildfires'
+        ? wildfireMarkerIcon(pt)
+        : { path: google.maps.SymbolPath.CIRCLE, scale:radius, fillColor:color, fillOpacity: hasMetric ? 0.75 : 0.9, strokeColor:"#1B2A2E", strokeWeight:1.2 }
     });
     marker.addListener('click', ()=>openDrawer(cat, pt));
     markers.push(marker);
@@ -3519,18 +3705,20 @@ function selectCategory(key){
     legend.className = 'map-legend';
     legend.innerHTML = Object.keys(cat.systemColors).map(sys=>
       `<div style="display:flex;align-items:center;gap:6px;margin:2px 0;"><span style="width:10px;height:10px;border-radius:50%;background:${cat.systemColors[sys]};display:inline-block;opacity:0.85;"></span>${sys}</div>`
-    ).join('') + `<div style="margin-top:4px;color:#666;">Circle size = ${cat.metricLabel}</div>`;
+    ).join('') + (cat.metricLabel ? `<div style="margin-top:4px;color:#666;">Circle size = ${cat.metricLabel}</div>` : '');
     document.querySelector('main').appendChild(legend);
   }
 }
 
 function openDrawer(cat, pt){
   const metricLine = (pt.metric !== undefined) ? `<p style="margin-bottom:0;"><strong>${pt.metric.toLocaleString()}</strong> ${cat.metricLabel||''}</p>` : '';
+  const durationLine = (pt.durationDays !== undefined) ? `<p><strong>Duration:</strong> ${pt.durationDays} days<br><span style="color:var(--water-deep)">${pt.dateRange}</span></p>` : '';
   const srcUrl = pt.src || cat.source;
   document.getElementById('drawerBody').innerHTML = `
-    <div class="cat-label">${cat.label}${pt.system ? ' &middot; ' + pt.system : ''}</div>
+    <div class="cat-label">${cat.label}${pt.system ? ' &middot; ' + pt.system : ''}${pt.operator ? ' &middot; ' + pt.operator : ''}</div>
     <h3>${pt.name}</h3>
     ${metricLine}
+    ${durationLine}
     <p>${pt.desc}</p>
     <a class="src" href="${srcUrl}" target="_blank" rel="noopener">source &rarr;</a>
   `;
@@ -3814,13 +4002,16 @@ window.initAtlasMap = function(){
 };
 
 document.getElementById('loadMapBtn').addEventListener('click', ()=>{
-  const key = document.getElementById('apiKeyInput').value.trim();
+  const keyInput = document.getElementById('apiKeyInput');
+  const key = keyInput.value.trim();
   if(!key){ alert('Paste a Google Maps API key first.'); return; }
   backToMap();
   const script = document.createElement('script');
   script.src = `https://maps.googleapis.com/maps/api/js?key=${encodeURIComponent(key)}&callback=initAtlasMap`;
   script.async = true;
+  script.onload = script.onerror = ()=>script.remove();
   document.body.appendChild(script);
+  keyInput.value = '';
 });
 
 buildSidebar();
