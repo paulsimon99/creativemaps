@@ -47,7 +47,7 @@
   .keybox a{color:var(--water);font-size:11px;text-decoration:none;border-bottom:1px dotted var(--water);}
 
   /* Body layout */
-  .body{display:flex;flex:1;min-height:0;}
+  .body{display:flex;flex:1;min-height:0;overflow:hidden;}
   nav.sidebar{
     width:290px;flex-shrink:0;background:var(--panel);border-right:1px solid var(--line);
     overflow-y:auto;padding:14px 0 40px;
@@ -65,7 +65,7 @@
   .cat-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
   .cat-count{margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--water-deep);}
 
-  main{flex:1;position:relative;background:var(--water);}
+  main{flex:1;position:relative;background:var(--water);overflow:hidden;min-height:0;}
   #map{width:100%;height:100%;}
   .map-hint{
     position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
@@ -83,14 +83,19 @@
     position:absolute;left:0;right:0;bottom:0;max-height:44%;background:var(--panel);
     border-top:2px solid var(--gold);transform:translateY(100%);transition:transform 0.25s ease;
     overflow-y:auto;padding:18px 26px 24px;
-    z-index:10;
+    z-index:10;visibility:hidden;pointer-events:none;
   }
-  .drawer.open{transform:translateY(0);}
+  .drawer.open{transform:translateY(0);visibility:visible;pointer-events:auto;}
   .drawer-close{position:absolute;top:10px;right:16px;background:none;border:none;font-size:18px;cursor:pointer;color:var(--ink);}
   .drawer h3{font-family:'Fraunces',serif;font-size:18px;margin:0 0 4px;}
   .drawer .cat-label{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:1px;text-transform:uppercase;color:var(--water-deep);}
   .drawer p{font-size:13.5px;line-height:1.5;margin:10px 0;}
   .drawer a.src{font-size:12px;color:var(--rust);text-decoration:none;border-bottom:1px solid var(--rust);}
+  .invention-photo{margin:10px 0 12px;max-width:560px;}
+  .invention-photo-frame{height:210px;background:var(--parchment-dim);border:1px solid var(--line);border-radius:6px;overflow:hidden;display:flex;align-items:center;justify-content:center;color:var(--water-deep);font-size:12px;}
+  .invention-photo-frame img{width:100%;height:100%;object-fit:contain;background:#eee8dc;display:none;}
+  .invention-photo-credit{display:none;margin-top:4px;font-size:10.5px;color:var(--water-deep);}
+  .invention-photo-credit a{color:var(--rust);text-decoration:none;border-bottom:1px solid var(--rust);}
 
   /* Reports panel (non-point data sources) */
   .reports-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px;padding:20px 26px 32px;overflow-y:auto;}
@@ -331,22 +336,22 @@ const CATEGORIES = {
     label: "Bay Area Inventions & Firsts", color:"#A8503A",
     source: "https://www.thebolditalic.com/10-inventions-to-come-out-of-san-francisco-before-tech-took-over/",
     items: [
-      {name:"HP Garage, Palo Alto", lat:37.4459, lng:-122.1611, desc:"Addison Avenue garage where Hewlett and Packard began; called the 'Birthplace of Silicon Valley.'", src:"https://www.hp.com/hpinfo/abouthp/histnfacts/garage/index.html"},
-      {name:"Ghirardelli Square", lat:37.8060, lng:-122.4230, desc:"Former chocolate factory tied to San Francisco's confectionery history.", src:"https://www.ghirardellisq.com/history"},
-      {name:"Buena Vista Cafe", lat:37.8060, lng:-122.4210, desc:"Credited with introducing Irish coffee to the U.S. in 1952.", src:"https://www.thebuenavista.com/home/irishcoffee.html"},
-      {name:"Japanese Tea Garden, GG Park", lat:37.7702, lng:-122.4700, desc:"One of the sites credited in fortune cookie origin stories.", src:"https://www.japaneseteagardensf.com/tea-house"},
-      {name:"Cable Car Turnaround, Powell & Market", lat:37.7845, lng:-122.4079, desc:"San Francisco's cable car system, a National Historic Landmark.", src:"https://www.sfmta.com/getting-around/muni/cable-cars/cable-car-history"},
-      {name:"Blue Bottle Coffee, Oakland", lat:37.8044, lng:-122.2712, desc:"Where the Bay Area's specialty coffee roaster got its start.", src:"https://bluebottlecoffee.com/us/eng/our-story"},
-      {name:"Atari Founding Site", lat:37.2358, lng:-121.9624, desc:"Early Atari offices in the South Bay video game corridor.", src:"https://atari.com/pages/history"},
-      {name:"Levi's Plaza (Jeans)", lat:37.8036, lng:-122.4013, desc:"Levi Strauss & Co. and Jacob Davis patented copper-riveted denim 'waist overalls' on May 20, 1873, birthing blue jeans."},
-      {name:"Playland at Ocean Beach site (It's-It)", lat:37.7749, lng:-122.5107, desc:"George Whitney created the It's-It ice cream sandwich in 1928, sold for decades at the Playland amusement park that once stood here."},
-      {name:"North Beach (Cioppino)", lat:37.8080, lng:-122.4177, desc:"Genoese fishermen created cioppino fish stew in the late 1800s from the day's leftover catch; popularized locally from 1852 onward."},
-      {name:"202 Green Street (First Television)", lat:37.8025, lng:-122.4041, desc:"Philo Farnsworth transmitted the first electronic television image from a lab here on September 7, 1927."},
-      {name:"Palais Royale Saloon site (Jukebox)", lat:37.7879, lng:-122.4074, desc:"Louis Glass and William S. Arnold installed the first coin-operated phonograph -- the jukebox -- here on November 23, 1889."},
-      {name:"Palace Hotel (Tetrazzini & Green Goddess)", lat:37.7885, lng:-122.4013, desc:"Palace Hotel chefs invented chicken tetrazzini (c. 1908-1910) and Green Goddess salad dressing (1923), both named for celebrity guests."},
-      {name:"406 Market Street (Slot Machine)", lat:37.7909, lng:-122.3994, desc:"Charles Fey built the three-reel Liberty Bell slot machine here in 1899, the site is California Historical Landmark No. 937."},
-      {name:"Varsity Sweet Shop site (Bendy Straw)", lat:37.7699, lng:-122.4756, desc:"Joseph Friedman invented the flexible drinking straw here in 1937 after watching his daughter struggle with a straight one."},
-      {name:"Nob Hill (Murphy Bed)", lat:37.7929, lng:-122.4161, desc:"William Lawrence Murphy invented the fold-into-the-wall Murphy bed in his small San Francisco apartment in the late 1800s; exact address is not precisely documented.", src:"https://www.smithsonianmag.com/smithsonian-institution/curator-finds-murphy-beds-place-in-american-history-48350873/"}
+      {name:"HP Garage, Palo Alto", lat:37.4459, lng:-122.1611, imageQuery:"Hewlett-Packard garage Palo Alto", desc:"Addison Avenue garage where Hewlett and Packard began; called the 'Birthplace of Silicon Valley.'", src:"https://www.hp.com/hpinfo/abouthp/histnfacts/garage/index.html"},
+      {name:"Ghirardelli Square", lat:37.8060, lng:-122.4230, imageQuery:"Ghirardelli chocolate bar", desc:"Former chocolate factory tied to San Francisco's confectionery history.", src:"https://www.ghirardellisq.com/history"},
+      {name:"Buena Vista Cafe", lat:37.8060, lng:-122.4210, imageQuery:"Irish coffee cocktail glass", desc:"Credited with introducing Irish coffee to the U.S. in 1952.", src:"https://www.thebuenavista.com/home/irishcoffee.html"},
+      {name:"Japanese Tea Garden, GG Park", lat:37.7702, lng:-122.4700, imageQuery:"fortune cookie food", desc:"One of the sites credited in fortune cookie origin stories.", src:"https://www.japaneseteagardensf.com/tea-house"},
+      {name:"Cable Car Turnaround, Powell & Market", lat:37.7845, lng:-122.4079, imageQuery:"San Francisco cable car", desc:"San Francisco's cable car system, a National Historic Landmark.", src:"https://www.sfmta.com/getting-around/muni/cable-cars/cable-car-history"},
+      {name:"Blue Bottle Coffee, Oakland", lat:37.8044, lng:-122.2712, imageQuery:"Blue Bottle Coffee Company", desc:"Where the Bay Area's specialty coffee roaster got its start.", src:"https://bluebottlecoffee.com/us/eng/our-story"},
+      {name:"Atari Founding Site", lat:37.2358, lng:-121.9624, imageQuery:"Atari 2600 video game console", desc:"Early Atari offices in the South Bay video game corridor.", src:"https://atari.com/pages/history"},
+      {name:"Levi's Plaza (Jeans)", lat:37.8036, lng:-122.4013, imageQuery:"blue jeans denim clothing", desc:"Levi Strauss & Co. and Jacob Davis patented copper-riveted denim 'waist overalls' on May 20, 1873, birthing blue jeans."},
+      {name:"Playland at Ocean Beach site (It's-It)", lat:37.7749, lng:-122.5107, imageQuery:"It's-It ice cream sandwich", desc:"George Whitney created the It's-It ice cream sandwich in 1928, sold for decades at the Playland amusement park that once stood here."},
+      {name:"North Beach (Cioppino)", lat:37.8080, lng:-122.4177, imageQuery:"cioppino seafood stew", desc:"Genoese fishermen created cioppino fish stew in the late 1800s from the day's leftover catch; popularized locally from 1852 onward."},
+      {name:"202 Green Street (First Television)", lat:37.8025, lng:-122.4041, imageQuery:"Philo Farnsworth early electronic television", desc:"Philo Farnsworth transmitted the first electronic television image from a lab here on September 7, 1927."},
+      {name:"Palais Royale Saloon site (Jukebox)", lat:37.7879, lng:-122.4074, imageQuery:"coin operated phonograph jukebox", desc:"Louis Glass and William S. Arnold installed the first coin-operated phonograph -- the jukebox -- here on November 23, 1889."},
+      {name:"Palace Hotel (Tetrazzini & Green Goddess)", lat:37.7885, lng:-122.4013, imageQuery:"chicken tetrazzini dish", desc:"Palace Hotel chefs invented chicken tetrazzini (c. 1908-1910) and Green Goddess salad dressing (1923), both named for celebrity guests."},
+      {name:"406 Market Street (Slot Machine)", lat:37.7909, lng:-122.3994, imageQuery:"Charles Fey Liberty Bell slot machine", desc:"Charles Fey built the three-reel Liberty Bell slot machine here in 1899, the site is California Historical Landmark No. 937."},
+      {name:"Varsity Sweet Shop site (Bendy Straw)", lat:37.7699, lng:-122.4756, imageQuery:"flexible bendy drinking straw", desc:"Joseph Friedman invented the flexible drinking straw here in 1937 after watching his daughter struggle with a straight one."},
+      {name:"Nob Hill (Murphy Bed)", lat:37.7929, lng:-122.4161, imageQuery:"Murphy bed folding wall bed", desc:"William Lawrence Murphy invented the fold-into-the-wall Murphy bed in his small San Francisco apartment in the late 1800s; exact address is not precisely documented.", src:"https://www.smithsonianmag.com/smithsonian-institution/curator-finds-murphy-beds-place-in-american-history-48350873/"}
     ]
   },
   museums: {
@@ -3000,15 +3005,65 @@ const MAX_HISTORICAL_POP = Math.max(
 );
 
 const RACE_COLORS = {
-  white:   {label:'White',                 color:'#C9BFA0'},
-  asian:   {label:'Asian',                 color:'#4F7B77'},
-  black:   {label:'Black',                 color:'#1B2A2E'},
-  mixed:   {label:'Two or more races',     color:'#C49A3A'},
-  other:   {label:'Other race',            color:'#7C8C8A'},
-  native:  {label:'Native American',       color:'#6B4226'},
-  pacific: {label:'Pacific Islander',      color:'#9FC4C0'},
-  hispanic:{label:'Hispanic or Latino',    color:'#A8503A'}
+  white:   {label:'White',                 color:'#E6B85C'},
+  asian:   {label:'Asian',                 color:'#148F88'},
+  black:   {label:'Black',                 color:'#5B4B8A'},
+  mixed:   {label:'Two or more races',     color:'#D875A2'},
+  other:   {label:'Other race',            color:'#8B9A75'},
+  native:  {label:'Native American',       color:'#A65F36'},
+  pacific: {label:'Pacific Islander',      color:'#55A7D9'},
+  hispanic:{label:'Hispanic or Latino',    color:'#D9574F'}
 };
+
+const RELIGION_COLORS = {
+  christian:{label:'Christian',color:'#3F78B5'},
+  jewish:{label:'Jewish',color:'#7257B8'},
+  muslim:{label:'Muslim',color:'#2F966D'},
+  hindu:{label:'Hindu',color:'#E28A32'},
+  buddhist:{label:'Buddhist',color:'#D2A72C'},
+  other:{label:'Other faith',color:'#B45B89'},
+  unaffiliated:{label:'Religiously unaffiliated',color:'#78878B'}
+};
+
+// Religion is not collected by the U.S. Census. PRRI's 2023 Census of
+// American Religion provides modeled county-level estimates, so cities inherit
+// their county's broad leading affiliation. Jewish population context comes
+// from the 2023 American Jewish Year Book (primarily 2017 community studies).
+const RELIGION_COUNTY_CONTEXT = {
+  Alameda:{dominant:'christian',jewish:63100},
+  'Contra Costa':{dominant:'christian',jewish:55900},
+  Marin:{dominant:'christian',jewish:37300},
+  Napa:{dominant:'christian',jewish:2100},
+  'San Francisco':{dominant:'christian',jewish:61500},
+  'San Mateo':{dominant:'christian',jewish:29700},
+  'Santa Clara':{dominant:'christian',jewish:73200,note:'PRRI estimates Hindu affiliation at 3%, among the highest county shares nationally.'},
+  Solano:{dominant:'christian',jewish:3900},
+  Sonoma:{dominant:'christian',jewish:8200}
+};
+
+function dominantRace(cityName, year){
+  const found=getRaceRecord(cityName,year); if(!found) return null;
+  const keys=['white','asian','black','mixed','other','native','pacific'];
+  const largestRace=Math.max(...keys.map(k=>found.rec[k]||0));
+  const hispanic=found.rec.hispanic||0;
+  // Hispanic/Latino is an ethnicity that may overlap every race bucket in the
+  // 2020 table. For map classification, give it priority when its citywide
+  // share is a majority or is larger than every displayed race category.
+  if(hispanic>largestRace || hispanic>found.rec.total/2){
+    return {keys:['hispanic'],year:found.year,rec:found.rec,classification:hispanic>found.rec.total/2?'majority':'plurality'};
+  }
+  return {keys:keys.filter(k=>(found.rec[k]||0)===largestRace),year:found.year,rec:found.rec,classification:'largest race group'};
+}
+
+function renderReligionSection(county){
+  const r=RELIGION_COUNTY_CONTEXT[county]; if(!r) return '';
+  return `<div class="cat-label" style="margin-top:12px;">Religion &middot; 2023 county estimate</div>
+    <p><span class="rl-dot" style="background:${RELIGION_COLORS[r.dominant].color};display:inline-block;margin-right:5px;"></span>Leading broad affiliation in ${county} County: <strong>${RELIGION_COLORS[r.dominant].label}</strong>.</p>
+    <p>Estimated Jewish community population: <strong>${r.jewish.toLocaleString()}</strong>. ${r.note||''}</p>
+    <div class="demo-note">PRRI models Christian traditions, Jewish, Muslim, Buddhist, Hindu, Unitarian Universalist, other non-Christian religions, and religiously unaffiliated adults. These are county estimates—not city Census counts.</div>
+    <a class="src" href="https://prri.org/research/census-2023-american-religion/" target="_blank" rel="noopener">PRRI county religion methodology &rarr;</a><br>
+    <a class="src" href="https://www.jewishdatabank.org/api/download/?mediaId=bjdb%5C2023_United_States_Jewish_Population_%28AJYB_Sheskin%2C_Dashefsky%29.pdf&amp;studyId=1286" target="_blank" rel="noopener">American Jewish Year Book estimates &rarr;</a>`;
+}
 
 // Returns the population figure in effect at `year` for a given city: the most
 // recent recorded census year at or before `year`. Returns null if the city has
@@ -3060,6 +3115,10 @@ function renderRaceSection(cityName, forYear){
     return `<span class="rl-item"><span class="rl-dot" style="background:${RACE_COLORS[s.key].color}"></span>${RACE_COLORS[s.key].label} ${pct}%</span>`;
   }).join('');
   const hispPctOfTotal = ((rec.hispanic||0)/rec.total*100).toFixed(1);
+  const dominant=dominantRace(cityName,year);
+  const classification=dominant?.keys.includes('hispanic')
+    ? `<div class="demo-note" style="margin-top:4px;color:#9B3F38;"><strong>Map color:</strong> Hispanic or Latino ${dominant.classification} (${hispPctOfTotal}%). Hispanic/Latino is an ethnicity and may overlap the race categories above.</div>`
+    : '';
   const note = year === 2020
     ? `<div class="demo-note">Hispanic or Latino residents of any race: ${hispPctOfTotal}% of total population.</div>`
     : `<div class="demo-note">Bar includes Hispanic/Latino as its own category, per ${year} Census race &amp; ethnicity tables.</div>`;
@@ -3068,6 +3127,7 @@ function renderRaceSection(cityName, forYear){
     <div class="race-bar">${bar}</div>
     <div class="race-legend">${legend}</div>
     ${note}
+    ${classification}
   `;
 }
 
@@ -3157,6 +3217,16 @@ function buildSidebar(){
   histItem.innerHTML = `<span class="cat-dot" style="background:var(--rust)"></span>Growth by decade, with demographics<span class="cat-count">${BAY_AREA_CITIES.length}</span>`;
   histItem.addEventListener('click', ()=>selectHistoryLayer());
   histGroup.appendChild(histItem);
+  const historyModeToggle=document.createElement('div');
+  historyModeToggle.id='historyModeToggle';
+  historyModeToggle.style.cssText='display:none;grid-template-columns:repeat(3,1fr);gap:4px;padding:6px 20px 4px;';
+  historyModeToggle.innerHTML=`<button class="history-mode-btn" data-mode="population">Population</button><button class="history-mode-btn active" data-mode="ethnicity">Ethnicity</button><button class="history-mode-btn" data-mode="religion">Religion</button>`;
+  historyModeToggle.querySelectorAll('button').forEach(btn=>{btn.style.cssText='font-size:10px;padding:5px 2px;border:1px solid var(--line);background:#fff;border-radius:3px;cursor:pointer;';btn.addEventListener('click',()=>{historyDisplayMode=btn.dataset.mode;renderHistoryYear();});});
+  histGroup.appendChild(historyModeToggle);
+  const historyLegend=document.createElement('div');
+  historyLegend.id='historyDemographicLegend';
+  historyLegend.style.cssText='display:none;padding:7px 20px 9px;font-size:10.5px;color:#4a4a4a;';
+  histGroup.appendChild(historyLegend);
   nav.appendChild(histGroup);
 
   const electGroup = document.createElement('div');
@@ -3359,6 +3429,19 @@ document.addEventListener('click', (e)=>{
 
 let historyYearIdx = SNAPSHOT_YEARS.length - 1; // start on 2020
 let historyPlayTimer = null;
+let historyDisplayMode = 'ethnicity';
+
+function renderHistoryLegend(year){
+  const legend=document.getElementById('historyDemographicLegend'); if(!legend) return;
+  document.querySelectorAll('.history-mode-btn').forEach(btn=>{const active=btn.dataset.mode===historyDisplayMode;btn.classList.toggle('active',active);btn.style.background=active?'var(--gold)':'#fff';});
+  if(historyDisplayMode==='population'){
+    legend.innerHTML='<strong>Population</strong><div class="population-ramp"></div><div class="population-ramp-labels"><span>Fewer residents</span><span>More residents</span></div><div style="margin-top:5px">Circle area follows population.</div>';
+  }else if(historyDisplayMode==='ethnicity'){
+    legend.innerHTML='<strong>Largest race/ethnicity group</strong>'+Object.values(RACE_COLORS).map(x=>`<div style="display:flex;align-items:center;gap:6px;margin:3px 0"><span style="width:9px;height:9px;border-radius:50%;background:${x.color};display:inline-block"></span>${x.label}</div>`).join('')+`<div style="margin-top:5px">Hispanic/Latino color is used when its citywide share is a majority or exceeds every displayed race category. Because ethnicity and race overlap, details retain both measures. Colors use the nearest Census profile (${nearestRaceYear(year)}); circle area follows population.</div>`;
+  }else{
+    legend.innerHTML='<strong>Leading broad religious affiliation</strong>'+Object.values(RELIGION_COLORS).map(x=>`<div style="display:flex;align-items:center;gap:6px;margin:3px 0"><span style="width:9px;height:9px;border-radius:50%;background:${x.color};display:inline-block"></span>${x.label}</div>`).join('')+'<div style="margin-top:5px">2023 PRRI county estimates inherited by cities; not Census or city-level observations.</div>';
+  }
+}
 
 function ensureTimeSliderPanel(){
   let panel = document.getElementById('timeSliderPanel');
@@ -3416,10 +3499,12 @@ function selectHistoryLayer(){
   { const _ml = document.getElementById('marginLegend'); if(_ml) _ml.remove(); }
   document.getElementById('yearToggle').style.display = 'none';
   document.getElementById('govYearToggle').style.display = 'none';
-  document.getElementById('populationLegend').style.display = 'block';
+  document.getElementById('populationLegend').style.display = 'none';
   document.querySelectorAll('.cat-item').forEach(el=>el.classList.toggle('active', el.dataset.key==='history'));
   document.getElementById('drawer').classList.remove('open');
   backToMap();
+  document.getElementById('historyModeToggle').style.display = 'grid';
+  document.getElementById('historyDemographicLegend').style.display = 'block';
   if(!map){ document.getElementById('mapHint').style.display='flex'; return; }
   ensureTimeSliderPanel().style.display = 'block';
   renderHistoryYear();
@@ -3427,6 +3512,7 @@ function selectHistoryLayer(){
 
 function renderHistoryYear(){
   const year = SNAPSHOT_YEARS[historyYearIdx];
+  renderHistoryLegend(year);
   document.getElementById('tsYearLabel').textContent = year;
   clearMarkers();
   const _cml = document.getElementById('catMetricLegend'); if(_cml) _cml.remove();
@@ -3439,16 +3525,21 @@ function renderHistoryYear(){
     totalPop += hit.pop;
     const radius = 4 + Math.sqrt(hit.pop/MAX_HISTORICAL_POP) * 30;
     const isExact = hit.year === year;
+    const race=dominantRace(c.name,year), religion=RELIGION_COUNTY_CONTEXT[c.county];
+    let fillColor=populationColor(hit.pop), context='population';
+    if(historyDisplayMode==='ethnicity' && race){fillColor=RACE_COLORS[race.keys[0]].color;context=`largest group: ${race.keys.map(k=>RACE_COLORS[k].label).join(' / ')} (${race.year} Census)`;}
+    if(historyDisplayMode==='religion' && religion){fillColor=RELIGION_COLORS[religion.dominant].color;context=`leading broad affiliation: ${RELIGION_COLORS[religion.dominant].label} (${c.county} County estimate)`;}
     const marker = new google.maps.Marker({
       position:{lat:c.lat, lng:c.lng}, map,
-      title:`${c.name} \u2014 ${hit.pop.toLocaleString()} residents (${hit.year}${isExact ? '' : ', latest on record'})`,
-      icon:{ path: google.maps.SymbolPath.CIRCLE, scale:radius, fillColor:populationColor(hit.pop), fillOpacity: isExact ? 0.78 : 0.4, strokeColor:"#245B55", strokeWeight:1 }
+      title:`${c.name} \u2014 ${hit.pop.toLocaleString()} residents; ${context}`,
+      icon:{ path: google.maps.SymbolPath.CIRCLE, scale:radius, fillColor, fillOpacity: isExact ? 0.82 : 0.48, strokeColor:"#243F43", strokeWeight:1 }
     });
     marker.addListener('click', ()=>openHistoryDrawer(c, year));
     markers.push(marker);
     bounds.extend(marker.getPosition());
   });
-  document.getElementById('tsTotalLabel').textContent = `${visibleCount} cities on record \u00b7 ${totalPop.toLocaleString()} residents`;
+  const modeLabel=historyDisplayMode==='ethnicity'?`colors: ${nearestRaceYear(year)} ethnicity`:historyDisplayMode==='religion'?'colors: 2023 county religion estimate':'population colors';
+  document.getElementById('tsTotalLabel').textContent = `${visibleCount} cities \u00b7 ${totalPop.toLocaleString()} residents \u00b7 ${modeLabel}`;
   if(!bounds.isEmpty()) map.fitBounds(bounds, 40);
 }
 
@@ -3463,6 +3554,7 @@ function openHistoryDrawer(c, year){
     <p>${popLine}</p>
     ${renderPopSparkline(c.name)}
     ${renderRaceSection(c.name, year)}
+    ${renderReligionSection(c.county)}
     <a class="src" href="https://files.mtc.ca.gov/library/pub/48117.pdf" target="_blank" rel="noopener">source: MTC/ABAG Bay Area Census compilation &rarr;</a>
   `;
   document.getElementById('drawer').classList.add('open');
@@ -3682,6 +3774,7 @@ function selectCategory(key){
   const bounds = new google.maps.LatLngBounds();
   const hasMetric = cat.items.some(pt=>pt.metric !== undefined);
   const maxMetric = hasMetric ? Math.max(...cat.items.map(pt=>pt.metric||0)) : null;
+  const inventionMarkerPairs=[];
   cat.items.forEach(pt=>{
     const radius = hasMetric ? (4 + Math.sqrt((pt.metric||0)/maxMetric) * 22) : 7;
     const color = (cat.systemColors && pt.system) ? cat.systemColors[pt.system] : cat.color;
@@ -3696,8 +3789,10 @@ function selectCategory(key){
     });
     marker.addListener('click', ()=>openDrawer(cat, pt));
     markers.push(marker);
+    if(key==='inventions')inventionMarkerPairs.push({pt,marker});
     bounds.extend(marker.getPosition());
   });
+  if(key==='inventions')loadInventionMarkerImages(inventionMarkerPairs);
   map.fitBounds(bounds, 60);
   if(cat.systemColors){
     const legend = document.createElement('div');
@@ -3710,19 +3805,72 @@ function selectCategory(key){
   }
 }
 
+const inventionImageCache = new Map();
+let inventionImageRequest = 0;
+async function getInventionImage(pt){
+  let result=inventionImageCache.get(pt.imageQuery);
+  if(result)return result;
+  const params=new URLSearchParams({action:'query',generator:'search',gsrsearch:`${pt.imageQuery} filetype:bitmap`,gsrnamespace:'6',gsrlimit:'8',prop:'imageinfo',iiprop:'url',iiurlwidth:'900',format:'json',origin:'*'});
+  const response=await fetch(`https://commons.wikimedia.org/w/api.php?${params}`);
+  if(!response.ok)throw new Error('image lookup failed');
+  const json=await response.json(),pages=Object.values(json.query?.pages||{}).sort((a,b)=>(a.index||99)-(b.index||99));
+  const page=pages.find(p=>p.imageinfo?.[0]?.thumburl);
+  if(!page)throw new Error('no image');
+  result={url:page.imageinfo[0].thumburl,credit:page.imageinfo[0].descriptionurl,title:page.title.replace(/^File:/,'')};
+  if(!result.url.startsWith('https://upload.wikimedia.org/')||!result.credit.startsWith('https://commons.wikimedia.org/'))throw new Error('unexpected image host');
+  inventionImageCache.set(pt.imageQuery,result);
+  return result;
+}
+
+async function loadInventionMarkerImages(pairs){
+  // Load sequentially to respect Commons API limits. Markers remain clickable
+  // rust dots until their small photographic thumbnail is ready.
+  for(const {pt,marker} of pairs){
+    if(activeCategory!=='inventions'||marker.getMap()!==map)return;
+    try{
+      const result=await getInventionImage(pt);
+      if(activeCategory!=='inventions'||marker.getMap()!==map)return;
+      marker.setIcon({url:result.url,scaledSize:new google.maps.Size(44,34),anchor:new google.maps.Point(22,17)});
+      marker.setZIndex(20);
+    }catch(e){ /* retain the accessible fallback marker */ }
+    await new Promise(resolve=>setTimeout(resolve,140));
+  }
+}
+
+async function loadInventionImage(pt){
+  const request=++inventionImageRequest;
+  const frame=document.getElementById('inventionPhotoFrame'),img=document.getElementById('inventionPhotoImg'),credit=document.getElementById('inventionPhotoCredit');
+  if(!frame||!img||!credit||!pt.imageQuery)return;
+  try{
+    const result=await getInventionImage(pt);
+    if(request!==inventionImageRequest||!document.getElementById('drawer').classList.contains('open'))return;
+    img.onload=()=>{if(request!==inventionImageRequest)return;img.style.display='block';frame.querySelector('span').style.display='none';credit.style.display='block';};
+    img.onerror=()=>{frame.querySelector('span').textContent='A representative photograph could not be loaded.';};
+    img.src=result.url;img.alt=`Representative photograph for ${pt.name}`;
+    credit.innerHTML='Representative photograph: ';
+    const link=document.createElement('a');link.href=result.credit;link.target='_blank';link.rel='noopener';link.textContent=result.title;credit.appendChild(link);
+    credit.append(' · Wikimedia Commons');
+  }catch(e){
+    if(request===inventionImageRequest&&frame)frame.querySelector('span').textContent='A representative photograph is currently unavailable.';
+  }
+}
+
 function openDrawer(cat, pt){
   const metricLine = (pt.metric !== undefined) ? `<p style="margin-bottom:0;"><strong>${pt.metric.toLocaleString()}</strong> ${cat.metricLabel||''}</p>` : '';
   const durationLine = (pt.durationDays !== undefined) ? `<p><strong>Duration:</strong> ${pt.durationDays} days<br><span style="color:var(--water-deep)">${pt.dateRange}</span></p>` : '';
   const srcUrl = pt.src || cat.source;
+  const inventionPhoto = cat===CATEGORIES.inventions ? `<figure class="invention-photo"><div class="invention-photo-frame" id="inventionPhotoFrame"><span>Loading representative photograph&hellip;</span><img id="inventionPhotoImg" alt=""></div><figcaption class="invention-photo-credit" id="inventionPhotoCredit"></figcaption></figure>` : '';
   document.getElementById('drawerBody').innerHTML = `
     <div class="cat-label">${cat.label}${pt.system ? ' &middot; ' + pt.system : ''}${pt.operator ? ' &middot; ' + pt.operator : ''}</div>
     <h3>${pt.name}</h3>
     ${metricLine}
     ${durationLine}
+    ${inventionPhoto}
     <p>${pt.desc}</p>
     <a class="src" href="${srcUrl}" target="_blank" rel="noopener">source &rarr;</a>
   `;
   document.getElementById('drawer').classList.add('open');
+  if(cat===CATEGORIES.inventions)loadInventionImage(pt);
   const cml = document.getElementById('catMetricLegend');
   if(cml) cml.style.display = 'none';
 }
@@ -3938,6 +4086,8 @@ function showReports(){
   document.getElementById('govYearToggle').style.display = 'none';
   document.getElementById('housingToggle').style.display = 'none';
   document.getElementById('housingLegend').style.display = 'none';
+  const historyModeToggle=document.getElementById('historyModeToggle');if(historyModeToggle)historyModeToggle.style.display='none';
+  const historyLegend=document.getElementById('historyDemographicLegend');if(historyLegend)historyLegend.style.display='none';
   const htp=document.getElementById('housingTimePanel');if(htp)htp.style.display='none';housingLayerActive=false;if(housingCompanyOverlay)housingCompanyOverlay.draw();
   document.querySelectorAll('.cat-item').forEach(el=>el.classList.toggle('active', el.dataset.key==='reports'));
   clearMarkers();
