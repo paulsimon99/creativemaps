@@ -343,7 +343,7 @@ const CATEGORIES = {
       {name:"Cable Car Turnaround, Powell & Market", lat:37.7845, lng:-122.4079, imageQuery:"San Francisco cable car", desc:"San Francisco's cable car system, a National Historic Landmark.", src:"https://www.sfmta.com/getting-around/muni/cable-cars/cable-car-history"},
       {name:"Blue Bottle Coffee, Oakland", lat:37.8044, lng:-122.2712, imageQuery:"Blue Bottle Coffee Company", desc:"Where the Bay Area's specialty coffee roaster got its start.", src:"https://bluebottlecoffee.com/us/eng/our-story"},
       {name:"Atari Founding Site", lat:37.2358, lng:-121.9624, imageQuery:"Atari 2600 video game console", desc:"Early Atari offices in the South Bay video game corridor.", src:"https://atari.com/pages/history"},
-      {name:"Levi's Plaza (Jeans)", lat:37.8036, lng:-122.4013, imageQuery:"blue jeans denim clothing", desc:"Levi Strauss & Co. and Jacob Davis patented copper-riveted denim 'waist overalls' on May 20, 1873, birthing blue jeans."},
+      {name:"Levi's Plaza (Jeans)", lat:37.8036, lng:-122.4013, imageQuery:"blue jeans denim clothing", desc:"Originally called ‘waist overalls,’ jeans were developed as rugged workwear during the California Gold Rush. San Francisco-based Levi Strauss and Jacob Davis received their patent for copper-riveted work pants on May 20, 1873."},
       {name:"Playland at Ocean Beach site (It's-It)", lat:37.7749, lng:-122.5107, imageQuery:"It's-It ice cream sandwich", desc:"George Whitney created the It's-It ice cream sandwich in 1928, sold for decades at the Playland amusement park that once stood here."},
       {name:"North Beach (Cioppino)", lat:37.8080, lng:-122.4177, imageQuery:"cioppino seafood stew", desc:"Genoese fishermen created cioppino fish stew in the late 1800s from the day's leftover catch; popularized locally from 1852 onward."},
       {name:"202 Green Street (First Television)", lat:37.8025, lng:-122.4041, imageQuery:"Philo Farnsworth early electronic television", desc:"Philo Farnsworth transmitted the first electronic television image from a lab here on September 7, 1927."},
@@ -3807,7 +3807,32 @@ function selectCategory(key){
 
 const inventionImageCache = new Map();
 let inventionImageRequest = 0;
+const CURATED_INVENTION_IMAGES={
+  "HP Garage, Palo Alto":{url:"https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/HP_Garage.jpg/960px-HP_Garage.jpg",credit:"https://commons.wikimedia.org/wiki/File:HP_Garage.jpg",title:"HP Garage"},
+  "Buena Vista Cafe":{url:"https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/Irish_coffee_glass.jpg/960px-Irish_coffee_glass.jpg",credit:"https://commons.wikimedia.org/wiki/File:Irish_coffee_glass.jpg",title:"Irish coffee"},
+  "Japanese Tea Garden, GG Park":{url:"https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Fortune_cookies.jpg/960px-Fortune_cookies.jpg",credit:"https://commons.wikimedia.org/wiki/File:Fortune_cookies.jpg",title:"Fortune cookies"},
+  "Cable Car Turnaround, Powell & Market":{url:"https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Cable_car_19_on_Hyde_Street%2C_July_2023.JPG/960px-Cable_car_19_on_Hyde_Street%2C_July_2023.JPG",credit:"https://commons.wikimedia.org/wiki/File:Cable_car_19_on_Hyde_Street,_July_2023.JPG",title:"San Francisco cable car"},
+  "Blue Bottle Coffee, Oakland":{url:"https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Blue_Bottle_Coffee_Company.jpg/960px-Blue_Bottle_Coffee_Company.jpg",credit:"https://commons.wikimedia.org/wiki/File:Blue_Bottle_Coffee_Company.jpg",title:"Blue Bottle Coffee Company"},
+  "Atari Founding Site":{url:"https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Atari-2600-Wood-4Sw-Set.png/960px-Atari-2600-Wood-4Sw-Set.png",credit:"https://commons.wikimedia.org/wiki/File:Atari-2600-Wood-4Sw-Set.png",title:"Atari 2600 console"},
+  "Levi's Plaza (Jeans)":{url:"https://upload.wikimedia.org/wikipedia/commons/5/5a/Jeans.jpg",credit:"https://commons.wikimedia.org/wiki/File:Jeans.jpg",title:"Pair of blue jeans"},
+  "Playland at Ocean Beach site (It's-It)":{url:"https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/IceCreamSandwich.jpg/960px-IceCreamSandwich.jpg",credit:"https://commons.wikimedia.org/wiki/File:IceCreamSandwich.jpg",title:"Ice-cream sandwich"},
+  "North Beach (Cioppino)":{url:"https://upload.wikimedia.org/wikipedia/commons/7/73/Cioppino.jpg",credit:"https://commons.wikimedia.org/wiki/File:Cioppino.jpg",title:"Cioppino"},
+  "202 Green Street (First Television)":{url:"https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Family_watching_television_1958.jpg/960px-Family_watching_television_1958.jpg",credit:"https://commons.wikimedia.org/wiki/File:Family_watching_television_1958.jpg",title:"Early television"},
+  "Palais Royale Saloon site (Jukebox)":{url:"https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Jukebox%2C_Liseberg_2012_%28cropped%29.jpg/960px-Jukebox%2C_Liseberg_2012_%28cropped%29.jpg",credit:"https://commons.wikimedia.org/wiki/File:Jukebox,_Liseberg_2012_(cropped).jpg",title:"Jukebox"},
+  "406 Market Street (Slot Machine)":{url:"https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Charles-Fey-liberty-bell.webp/960px-Charles-Fey-liberty-bell.webp.png",credit:"https://commons.wikimedia.org/wiki/File:Charles-Fey-liberty-bell.webp",title:"Charles Fey Liberty Bell slot machine"},
+  "Nob Hill (Murphy Bed)":{url:"https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/Murphy_bed.jpg/960px-Murphy_bed.jpg",credit:"https://commons.wikimedia.org/wiki/File:Murphy_bed.jpg",title:"Murphy bed"}
+};
+const INVENTION_ICON={
+  "Ghirardelli Square":"🍫","Palace Hotel (Tetrazzini & Green Goddess)":"🍝","Varsity Sweet Shop site (Bendy Straw)":"🥤"
+};
+function inventionIconResult(pt){
+  const glyph=INVENTION_ICON[pt.name]||'💡';
+  const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="240" height="180" viewBox="0 0 240 180"><rect width="240" height="180" rx="18" fill="#EFE7D8"/><circle cx="120" cy="90" r="62" fill="#FFFDF5" stroke="#A8503A" stroke-width="4"/><text x="120" y="112" text-anchor="middle" font-size="72">${glyph}</text></svg>`;
+  return {url:`data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`,credit:'',title:'Built-in representative icon',isIcon:true};
+}
 async function getInventionImage(pt){
+  if(CURATED_INVENTION_IMAGES[pt.name])return CURATED_INVENTION_IMAGES[pt.name];
+  if(INVENTION_ICON[pt.name])return inventionIconResult(pt);
   let result=inventionImageCache.get(pt.imageQuery);
   if(result)return result;
   const params=new URLSearchParams({action:'query',generator:'search',gsrsearch:`${pt.imageQuery} filetype:bitmap`,gsrnamespace:'6',gsrlimit:'8',prop:'imageinfo',iiprop:'url',iiurlwidth:'900',format:'json',origin:'*'});
@@ -3829,10 +3854,11 @@ async function loadInventionMarkerImages(pairs){
     if(activeCategory!=='inventions'||marker.getMap()!==map)return;
     try{
       const result=await getInventionImage(pt);
+      const markerUrl=await new Promise(resolve=>{const probe=new Image();probe.onload=()=>resolve(result.url);probe.onerror=()=>resolve(inventionIconResult(pt).url);probe.src=result.url;});
       if(activeCategory!=='inventions'||marker.getMap()!==map)return;
-      marker.setIcon({url:result.url,scaledSize:new google.maps.Size(44,34),anchor:new google.maps.Point(22,17)});
+      marker.setIcon({url:markerUrl,scaledSize:new google.maps.Size(44,34),anchor:new google.maps.Point(22,17)});
       marker.setZIndex(20);
-    }catch(e){ /* retain the accessible fallback marker */ }
+    }catch(e){marker.setIcon({url:inventionIconResult(pt).url,scaledSize:new google.maps.Size(44,34),anchor:new google.maps.Point(22,17)});}
     await new Promise(resolve=>setTimeout(resolve,140));
   }
 }
@@ -3845,13 +3871,16 @@ async function loadInventionImage(pt){
     const result=await getInventionImage(pt);
     if(request!==inventionImageRequest||!document.getElementById('drawer').classList.contains('open'))return;
     img.onload=()=>{if(request!==inventionImageRequest)return;img.style.display='block';frame.querySelector('span').style.display='none';credit.style.display='block';};
-    img.onerror=()=>{frame.querySelector('span').textContent='A representative photograph could not be loaded.';};
+    img.onerror=()=>{const fallback=inventionIconResult(pt);img.onerror=null;img.src=fallback.url;credit.textContent='Built-in representative icon';credit.style.display='block';};
     img.src=result.url;img.alt=`Representative photograph for ${pt.name}`;
-    credit.innerHTML='Representative photograph: ';
-    const link=document.createElement('a');link.href=result.credit;link.target='_blank';link.rel='noopener';link.textContent=result.title;credit.appendChild(link);
-    credit.append(' · Wikimedia Commons');
+    if(result.isIcon){credit.textContent='Built-in representative icon';}
+    else{
+      credit.innerHTML='Representative photograph: ';
+      const link=document.createElement('a');link.href=result.credit;link.target='_blank';link.rel='noopener';link.textContent=result.title;credit.appendChild(link);
+      credit.append(' · Wikimedia Commons');
+    }
   }catch(e){
-    if(request===inventionImageRequest&&frame)frame.querySelector('span').textContent='A representative photograph is currently unavailable.';
+    if(request===inventionImageRequest&&frame){const fallback=inventionIconResult(pt);img.src=fallback.url;img.style.display='block';frame.querySelector('span').style.display='none';credit.textContent='Built-in representative icon';credit.style.display='block';}
   }
 }
 
